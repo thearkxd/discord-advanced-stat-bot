@@ -1,0 +1,20 @@
+{
+  "name": "discord-stat",
+  "version": "0.0.1",
+  "description": "A simple Discord stat bot.",
+  "main": "theark.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "cron": "^1.8.2",
+    "discord.js": "^12.5.1",
+    "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2",
+    "mongoose": "^5.11.14"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.17.0"
+  }
+}
