@@ -26,8 +26,6 @@ NOT: Eğer `client.ranks` kısmını doldurmazsanız bot hata verecektir!
 
 Komutlarda girili olan emojileri değiştirmeyi unutmayınız!
 
-Desteklerinden dolayı [Emperor](https://discord.com/users/752513181360062574)'a çok teşekkür ederim.
-
 Tada 🎉. Artık invite botun hazır. Dilediğin gibi kullanabilirsin.
 
 # Görseller:
