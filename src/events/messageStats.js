@@ -18,11 +18,11 @@ module.exports = async (message) => {
       num++;
       const coinData = await coin.findOne({ guildID: message.guild.id, userID: message.author.id });
       if (coinData && client.ranks.some(x => coinData.coin === x.coin)) {
-        const oldRanks = client.ranks.filter(x => x.coin < coinData.coin);
         let newRank = client.ranks.filter(x => coinData.coin >= x.coin);
         newRank = newRank[newRank.length-1];
+        const oldRank = client.ranks[client.ranks.indexOf(newRank)-1];
         message.member.roles.add(newRank.role);
-        oldRanks.forEach(x => message.member.roles.remove(x.role));
+        if (Array.isArray(oldRank.role) && oldRank.role.some(x => message.member.roles.cache.has(x)) || !Array.isArray(oldRank.role) && message.member.roles.cache.has(oldRank.role)) message.member.roles.remove(oldRank.role);
         const embed = new MessageEmbed().setColor("GREEN");
         message.guild.channels.cache.get(conf.rankLog).send(embed.setDescription(`${message.member.toString()} üyesi **${coinData.coin}** coin hedefine ulaştı ve ${Array.isArray(newRank.role) ? newRank.role.map(x => `<@&${x}>`).join(", ") : `<@&${newRank.role}>`} rolü verildi!`));
       }
