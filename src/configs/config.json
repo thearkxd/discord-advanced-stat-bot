@@ -1,6 +1,6 @@
 {
   "rankLog": "",
-  "tag": "",
+  "tag": "✬",
   "staffs": [],
   "publicParents": [],
   "registerParents": [],
@@ -13,5 +13,12 @@
   "voiceCount": 1,
   "voiceCoin": 1,
   "publicCoin": 1,
-  "taggedCoin": 1
+  "taggedCoin": 1,
+  "emojis": {
+    "fill": "",
+    "empty": "",
+    "fillStart": "",
+    "emptyEnd": "",
+    "fillEnd": ""
+  }
 }
