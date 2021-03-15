@@ -38,7 +38,7 @@ async function saveDatas(user, channel, data) {
     if (coinData && client.ranks.some(x => x.coin >= coinData.coin)) {
       let newRank = client.ranks.filter(x => coinData.coin >= x.coin);
       newRank = newRank[newRank.length-1];
-      if (Array.isArray(newRank.role) && !newRank.role.some(x => user.member.roles.cache.has(x)) || !Array.isArray(newRank.role) && !user.member.roles.cache.has(newRank.role)) {
+      if (newRank && Array.isArray(newRank.role) && !newRank.role.some(x => user.member.roles.cache.has(x)) || newRank && !Array.isArray(newRank.role) && !user.member.roles.cache.has(newRank.role)) {
         const oldRank = client.ranks[client.ranks.indexOf(newRank)-1];
         user.member.roles.add(newRank.role);
         if (oldRank && Array.isArray(oldRank.role) && oldRank.role.some(x => user.member.roles.cache.has(x)) || oldRank && !Array.isArray(oldRank.role) && user.member.roles.cache.has(oldRank.role)) user.member.roles.remove(oldRank.role);
