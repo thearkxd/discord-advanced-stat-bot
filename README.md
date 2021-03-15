@@ -33,6 +33,8 @@ Eğer bir kullanıcıda `config.json` dosyasındaki staffs kısmına ID'sini gir
 
 Senkronize komutu ise şu işe yarar; Diyelim siz `client.ranks` kısmına `x, y ve z` rollerini girdiniz ve botu sunucuya eklediniz. Fakat bende botu eklediğiniz zaman halihazırda `z` rolü vardı. Eğer siz benim üstümde senkronize komutunu kullanmazsanız, ben yetki atladığım zaman bot benim `z` rolümü alıp bana `x` rolü verecektir. Fakat eğer senkronize komutunu kullanırsanız, bot benim coinimi, `z` rolüne atadığınız coin ile eşitleyecektir.
 
+Botu Glitch'te kullanmak için `package.json` dosyasını Glitch uyumlu hale getirmeniz gerekmektedir!
+
 # Görseller:
 <img src="https://cdn.discordapp.com/attachments/717686233027051612/816195201151270932/unknown.png">
 
