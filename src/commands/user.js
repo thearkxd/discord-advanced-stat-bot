@@ -60,7 +60,7 @@ module.exports = {
 
     const maxValue = client.ranks[client.ranks.indexOf(client.ranks.find(x => x.coin >= (coinData ? coinData.coin : 0)))] || client.ranks[client.ranks.length-1];
 
-    const coinStatus = conf.staffs.some(x => member.roles.cache.has(x)) ? ` **➥ Puan Durumu:**\n- Puanınız: \`${coinData ? coinData.coin : 0}\`, Gereken: \`${maxValue.coin}\` \n${progressBar(coinData ? coinData.coin : 0, maxValue.coin, 8)} \`${coinData ? coinData.coin : 0} / ${maxValue.coin}\`` : "";
+    const coinStatus = conf.staffs.some(x => member.roles.cache.has(x)) && client.ranks.length > 0 ? ` **➥ Puan Durumu:**\n- Puanınız: \`${coinData ? coinData.coin : 0}\`, Gereken: \`${maxValue.coin}\` \n${progressBar(coinData ? coinData.coin : 0, maxValue.coin, 8)} \`${coinData ? coinData.coin : 0} / ${maxValue.coin}\`` : "";
 
     embed.setThumbnail(member.user.avatarURL({ dynamic: true, size: 2048 }))
     embed.setDescription(`

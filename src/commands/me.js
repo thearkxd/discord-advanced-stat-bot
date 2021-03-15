@@ -59,7 +59,8 @@ module.exports = {
     const maxValue = client.ranks[client.ranks.indexOf(client.ranks.find(x => x.coin >= (coinData ? coinData.coin : 0)))] || client.ranks[client.ranks.length-1];
     const taggedData = await taggeds.findOne({ guildID: message.guild.id, userID: message.author.id });
 
-    const coinStatus = conf.staffs.some(x => message.member.roles.cache.has(x)) ? `**➥ Puan Durumu:** ${taggedData ? `\nTag aldırdığı üye sayısı: \`${taggedData.taggeds.length}\`` : ""}
+    const coinStatus = conf.staffs.some(x => message.member.roles.cache.has(x)) && client.ranks.length > 0 ?
+    `**➥ Puan Durumu:** ${taggedData ? `\nTag aldırdığı üye sayısı: \`${taggedData.taggeds.length}\`` : ""}
     - Puanınız: \`${coinData ? coinData.coin : 0}\`, Gereken: \`${maxValue.coin}\` 
     ${progressBar(coinData ? coinData.coin : 0, maxValue.coin, 8)} \`${coinData ? coinData.coin : 0} / ${maxValue.coin}\`
     ${client.ranks[client.ranks.indexOf(maxValue)-1] ? `**───────────────** 

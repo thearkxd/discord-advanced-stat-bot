@@ -12,9 +12,7 @@ const client = global.client;
 module.exports = async (oldState, newState) => {
   if ((oldState.member && oldState.member.user.bot) || (newState.member && newState.member.user.bot)) return;
   
-  if (!oldState.channelID && newState.channelID) {
-    await joinedAt.findOneAndUpdate({ userID: newState.id }, { $set: { date: Date.now() } }, { upsert: true });
-  }
+  if (!oldState.channelID && newState.channelID) await joinedAt.findOneAndUpdate({ userID: newState.id }, { $set: { date: Date.now() } }, { upsert: true });
 
   let joinedAtData = await joinedAt.findOne({ userID: oldState.id });
 
@@ -37,15 +35,15 @@ async function saveDatas(user, channel, data) {
       if (data >= (1000 * 60) * conf.voiceCount) await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: conf.publicCoin * parseInt(data/1000/60) } }, { upsert: true });
     } else if (data >= (1000 * 60) * conf.voiceCount) await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: conf.voiceCoin * parseInt(data/1000/60) } }, { upsert: true });
     const coinData = await coin.findOne({ guildID: user.guild.id, userID: user.id });
-    if (client.ranks.some(x => x.coin >= (coinData ? coinData.coin : 0))) {
+    if (coinData && client.ranks.some(x => x.coin >= coinData.coin)) {
       const oldRanks = client.ranks.filter(x => x.coin < coinData.coin);
-      let newRank = client.ranks.find(x => x.coin >= coinData.coin);
+      let newRank = client.ranks.filter(x => x.coin >= coinData.coin);
       newRank = newRank[newRank.length-1];
       if (newRank.hammer) user.member.roles.add(newRank.hammer);
       user.member.roles.add(newRank.role);
       oldRanks.forEach(x => user.member.roles.remove(x.role));
       const embed = new MessageEmbed().setColor("GREEN");
-      user.guild.channels.cache.get(conf.rankLog).send(embed.setDescription(`${user.member.toString()} üyesi **${coinData.coin}** xp hedefine ulaştı ve ${Array.isArray(newRank.role) ? newRank.role.map(x => `<@&${x}>`).join(", ") : `<@&${newRank.role}>`} rolü verildi!`));
+      user.guild.channels.cache.get(conf.rankLog).send(embed.setDescription(`${user.member.toString()} üyesi **${coinData.coin}** coin hedefine ulaştı ve ${Array.isArray(newRank.role) ? newRank.role.map(x => `<@&${x}>`).join(", ") : `<@&${newRank.role}>`} rolü verildi!`));
     }
   }
   await voiceUser.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { topStat: data, dailyStat: data, weeklyStat: data, twoWeeklyStat: data } }, { upsert: true });

@@ -1,5 +1,4 @@
 {
-  "invLogChannel": "",
   "rankLog": "",
   "tag": "",
   "staffs": [],
@@ -14,7 +13,5 @@
   "voiceCount": 1,
   "voiceCoin": 1,
   "publicCoin": 1,
-  "inviteCount": 1,
-  "inviteCoin": 1,
   "taggedCoin": 1
 }
