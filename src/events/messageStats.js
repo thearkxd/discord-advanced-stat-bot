@@ -19,7 +19,8 @@ module.exports = async (message) => {
       const coinData = await coin.findOne({ guildID: message.guild.id, userID: message.author.id });
       if (coinData && client.ranks.some(x => x.coin === coinData.coin)) {
         const oldRanks = client.ranks.filter(x => x.coin < coinData.coin);
-        const newRank = client.ranks.find(x => x.coin === coinData.coin);
+        let newRank = client.ranks.filter(x => coinData.coin >= x.coin);
+        newRank = newRank[newRank.length-1];
         if (newRank.hammer) message.member.roles.add(newRank.hammer);
         message.member.roles.add(newRank.role);
         oldRanks.forEach(x => message.member.roles.remove(x.role));
