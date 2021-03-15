@@ -37,9 +37,11 @@ module.exports = {
       const count = parseInt(args[2]);
       if (!count) return message.channel.send(embed.setDescription("Çıkarılacak için bir sayı belirtmelisin!"));
       if (!count < 0) return message.channel.send(embed.setDescription("Çıkarılacak sayı 0'dan küçük olamaz!"));
+      let coinData = await coin.findOne({ guildID: message.guild.id, userID: member.user.id });
+      if (!coinData || coinData && count > coinData.coin) return message.channel.send(embed.setDescription("Çıkarmak istediğiniz sayı, kişinin mevcut coininden büyük olamaz!"));
 
       await coin.findOneAndUpdate({ guildID: message.guild.id, userID: member.user.id }, { $inc: { coin: -count } }, { upsert: true });
-      const coinData = await coin.findOne({ guildID: message.guild.id, userID: member.user.id });
+      coinData = await coin.findOne({ guildID: message.guild.id, userID: member.user.id });
       let removedRoles = "";
       if (coinData && client.ranks.some(x => coinData.coin < x.coin && member.roles.cache.has(x.role))) {
         const roles = client.ranks.filter(x =>  coinData.coin < x.coin && member.roles.cache.has(x.role));

@@ -32,6 +32,6 @@ module.exports = {
           message.channel.send(embed.setDescription(`${member.toString()} üyesinde <@&${rank.role}> rolü bulundu ve coini ${rank.coin} olarak değiştirildi!`));
         } else return message.channel.send(embed.setDescription(`${member.toString()} üyesinde sistemde ayarlı bir rol bulunamadı!`));
       });
-    }
+    } else return message.channel.send(embed.setDescription("Bir argüman belirtmelisin!"));
   }
 };

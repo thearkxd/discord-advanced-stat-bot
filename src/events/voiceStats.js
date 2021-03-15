@@ -37,7 +37,7 @@ async function saveDatas(user, channel, data) {
     const coinData = await coin.findOne({ guildID: user.guild.id, userID: user.id });
     if (coinData && client.ranks.some(x => x.coin >= coinData.coin)) {
       const oldRanks = client.ranks.filter(x => x.coin < coinData.coin);
-      let newRank = client.ranks.filter(x => x.coin >= coinData.coin);
+      let newRank = client.ranks.filter(x => coinData.coin >= x.coin);
       newRank = newRank[newRank.length-1];
       if (newRank.hammer) user.member.roles.add(newRank.hammer);
       user.member.roles.add(newRank.role);
