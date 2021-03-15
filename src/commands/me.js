@@ -58,6 +58,8 @@ module.exports = {
 
     const maxValue = client.ranks[client.ranks.indexOf(client.ranks.find(x => x.coin >= (coinData ? coinData.coin : 0)))] || client.ranks[client.ranks.length-1];
     const taggedData = await taggeds.findOne({ guildID: message.guild.id, userID: message.author.id });
+    let currentRank = client.ranks.filter(x => (coinData ? coinData.coin : 0) >= x.coin);
+    currentRank = currentRank[currentRank.length-1];
 
     const coinStatus = conf.staffs.some(x => message.member.roles.cache.has(x)) && client.ranks.length > 0 ?
     `**➥ Puan Durumu:** ${taggedData ? `\nTag aldırdığı üye sayısı: \`${taggedData.taggeds.length}\`` : ""}
@@ -65,7 +67,7 @@ module.exports = {
     ${progressBar(coinData ? coinData.coin : 0, maxValue.coin, 8)} \`${coinData ? coinData.coin : 0} / ${maxValue.coin}\`
     ${client.ranks[client.ranks.indexOf(maxValue)-1] ? `**───────────────** 
     **➥ Yetki Durumu:** 
-    ${maxValue !== client.ranks[client.ranks.length-1] ? `Şu an <@&${client.ranks[client.ranks.indexOf(maxValue)-1].role}> rolündesiniz. <@&${maxValue.role}> rolüne ulaşmak için \`${maxValue.coin-coinData.coin}\` coin daha kazanmanız gerekiyor!` : "Şu an son yetkidesiniz! Emekleriniz için teşekkür ederiz."}` : `**───────────────** 
+    ${currentRank !== client.ranks[client.ranks.length-1] ? `Şu an <@&${client.ranks[client.ranks.indexOf(maxValue)-1].role}> rolündesiniz. <@&${maxValue.role}> rolüne ulaşmak için \`${maxValue.coin-coinData.coin}\` coin daha kazanmanız gerekiyor!` : "Şu an son yetkidesiniz! Emekleriniz için teşekkür ederiz."}` : `**───────────────** 
     **➥ Yetki Durumu:** 
     <@&${maxValue.role}> rolüne ulaşmak için \`${maxValue.coin - (coinData ? coinData.coin : 0)}\` coin daha kazanmanız gerekiyor!
     `}` : "";
