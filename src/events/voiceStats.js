@@ -40,7 +40,7 @@ async function saveDatas(user, channel, data) {
       newRank = newRank[newRank.length-1];
       const oldRank = client.ranks[client.ranks.indexOf(newRank)-1];
       user.member.roles.add(newRank.role);
-      if (Array.isArray(oldRank.role) && oldRank.role.some(x => user.member.roles.cache.has(x)) || !Array.isArray(oldRank.role) && user.member.roles.cache.has(oldRank.role)) user.member.roles.remove(oldRank.role);
+      if (oldRank && Array.isArray(oldRank.role) && oldRank.role.some(x => user.member.roles.cache.has(x)) || oldRank && !Array.isArray(oldRank.role) && user.member.roles.cache.has(oldRank.role)) user.member.roles.remove(oldRank.role);
       const embed = new MessageEmbed().setColor("GREEN");
       user.guild.channels.cache.get(conf.rankLog).send(embed.setDescription(`${user.member.toString()} üyesi **${coinData.coin}** coin hedefine ulaştı ve ${Array.isArray(newRank.role) ? newRank.role.map(x => `<@&${x}>`).join(", ") : `<@&${newRank.role}>`} rolü verildi!`));
     }
