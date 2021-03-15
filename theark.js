@@ -5,18 +5,7 @@ client.commands = new Collection();
 client.aliases = new Collection();
 client.invites = new Collection();
 client.cooldown = new Map();
-client.ranks = [
-  { role: ["803544527968534528"], coin: 100 },
-  { role: ["803544527066628106", "803544588257853491"], coin: 200 },
-  { role: "803544525950812180", coin: 300 },
-  { role: "803544524831850537", coin: 400 },
-  { role: "803544523988664341", coin: 500 },
-  { role: "803544522697080842", coin: 600 },
-  { role: "803544521723478067", coin: 700 },
-  { role: "803544521207971871", coin: 800 },
-  { role: "803544520474099712", coin: 900 },
-  { role: "803544519516618803", coin: 1000 }
-];
+client.ranks = [];
 require("./src/handlers/commandHandler");
 require("./src/handlers/eventHandler");
 require("./src/handlers/mongoHandler");
