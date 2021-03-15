@@ -26,7 +26,6 @@ module.exports = {
         const roles = client.ranks.filter(x => coinData.coin >= x.coin && !member.roles.cache.has(x.role));
         addedRoles = roles;
         member.roles.add(roles[roles.length-1].role);
-        if (roles[roles.length-1].hammer) member.roles.add(roles[roles.length-1].hammer);
         embed.setColor("GREEN");
         message.guild.channels.cache.get(conf.rankLog).send(embed.setDescription(`${member.toString()} üyesine ${message.member.toString()} tarafından **${count}** adet coin eklendi ve kişiye ${roles.filter(x => roles.indexOf(x) === roles.length-1).map(x => `<@&${x.role}>`).join("\n")} rolleri verildi!`));
       }
@@ -47,7 +46,6 @@ module.exports = {
         const roles = client.ranks.filter(x =>  coinData.coin < x.coin && member.roles.cache.has(x.role));
         removedRoles = roles;
         roles.forEach(x => {
-          if (x.hammer) member.roles.remove(x.hammer)
           member.roles.remove(x.role)
         });
         embed.setColor("RED");
@@ -68,7 +66,6 @@ module.exports = {
       if (coinData && client.ranks.some(x => coinData.coin < x.coin && message.member.roles.cache.has(x.role))) {
         const roles = client.ranks.filter(x =>  coinData.coin < x.coin && message.member.roles.cache.has(x.role));
         roles.forEach(x => {
-          if (x.hammer) message.member.roles.remove(x.hammer)
           message.member.roles.remove(x.role)
         });
       }
@@ -76,7 +73,6 @@ module.exports = {
       if (coinData2 && client.ranks.some(x => coinData2.coin >= x.coin && !member.roles.cache.has(x.role))) {
         const roles = client.ranks.filter(x => coinData2.coin >= x.coin && !member.roles.cache.has(x.role));
         member.roles.add(roles[roles.length-1].role);
-        if (roles[roles.length-1].hammer) member.roles.add(roles[roles.length-1].hammer);
       }
       
       message.channel.send(embed.setDescription(`${member.toString()} kişisine başarıyla **${count}** coin gönderildi!`));

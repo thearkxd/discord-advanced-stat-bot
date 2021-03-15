@@ -1,6 +1,6 @@
 {
-  "token": "",
-  "prefix": [],
-  "mongoUrl": "",
-  "owners": []
+  "token": "ODIwNzQxODg0MTQxMjQwMzIy.YE5lcQ.N3rpiMn0txYPSnG0khk39AtdewU",
+  "prefix": ["."],
+  "mongoUrl": "mongodb+srv://theark:Thearkwashere2809@cluster0.3hs7l.mongodb.net/Cluster0?retryWrites=true&w=majority",
+  "owners": ["350976460313329665"]
 }

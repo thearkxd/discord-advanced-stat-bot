@@ -39,7 +39,7 @@ async function saveDatas(user, channel, data) {
       const oldRanks = client.ranks.filter(x => x.coin < coinData.coin);
       let newRank = client.ranks.filter(x => coinData.coin >= x.coin);
       newRank = newRank[newRank.length-1];
-      if (newRank.hammer) user.member.roles.add(newRank.hammer);
+      if (Array.isArray(newRank.role) && newRank.role.some(x => user.member.roles.cache.has(x)) || !Array.isArray(newRank.role) && user.member.roles.cache.has(newRank.role)) return;
       user.member.roles.add(newRank.role);
       oldRanks.forEach(x => user.member.roles.remove(x.role));
       const embed = new MessageEmbed().setColor("GREEN");

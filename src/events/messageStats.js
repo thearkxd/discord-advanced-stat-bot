@@ -17,11 +17,10 @@ module.exports = async (message) => {
       await coin.findOneAndUpdate({ guildID: message.guild.id, userID: message.author.id }, { $inc: { coin: conf.messageCoin } }, { upsert: true });
       num++;
       const coinData = await coin.findOne({ guildID: message.guild.id, userID: message.author.id });
-      if (coinData && client.ranks.some(x => x.coin === coinData.coin)) {
+      if (coinData && client.ranks.some(x => coinData.coin === x.coin)) {
         const oldRanks = client.ranks.filter(x => x.coin < coinData.coin);
         let newRank = client.ranks.filter(x => coinData.coin >= x.coin);
         newRank = newRank[newRank.length-1];
-        if (newRank.hammer) message.member.roles.add(newRank.hammer);
         message.member.roles.add(newRank.role);
         oldRanks.forEach(x => message.member.roles.remove(x.role));
         const embed = new MessageEmbed().setColor("GREEN");
