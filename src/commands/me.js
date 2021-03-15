@@ -109,8 +109,8 @@ function progressBar(value, maxValue, size) {
 const progress = Math.round(size * ((value / maxValue) > 1 ? 1 : (value / maxValue)));
 const emptyProgress = size - progress > 0 ? size - progress : 0;
 
-const progressText = "<a:fill:816043000407785522>".repeat(progress);
-const emptyProgressText = "<:empty:816043000341725255>".repeat(emptyProgress);
+const progressText = conf.emojis.fill.repeat(progress);
+const emptyProgressText = conf.emojis.empty.repeat(emptyProgress);
 
-return emptyProgress > 0 ? `<a:fill_start:816043000198463489>${progressText}${emptyProgressText}<:empty_end:816042999997268028>` : `<a:fill_start:816043000198463489>${progressText}${emptyProgressText}<a:fill_end:816043000386945064>`;
+return emptyProgress > 0 ? conf.emojis.fillStart+progressText+emptyProgressText+conf.emojis.emptyEnd : conf.emojis.fillStart+progressText+emptyProgressText+conf.emojis.fillEnd;
 };
