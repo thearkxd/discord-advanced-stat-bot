@@ -18,7 +18,6 @@ module.exports = async (message) => {
       nums.set(message.author.id, num + 1);
       await coin.findOneAndUpdate({ guildID: message.guild.id, userID: message.author.id }, { $inc: { coin: conf.messageCoin } }, { upsert: true });
       const coinData = await coin.findOne({ guildID: message.guild.id, userID: message.author.id });
-      console.log(coinData.coin);
       if (coinData && client.ranks.some(x => coinData.coin === x.coin)) {
         let newRank = client.ranks.filter(x => coinData.coin >= x.coin);
         newRank = newRank[newRank.length-1];
