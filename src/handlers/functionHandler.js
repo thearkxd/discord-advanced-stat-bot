@@ -5,5 +5,7 @@ const { GuildMember } = require("discord.js");
  */
 
 module.exports = function (client) {
-  GuildMember.prototype.hasRole = (role, every = true) => (Array.isArray(role) && (every && role.every((x) => this.roles.cache.has(x)) || !every && role.some((x) => this.roles.cache.has(x))) || !Array.isArray(role) && this.roles.cache.has(role));
+  GuildMember.prototype.hasRole = function (role, every = true) {
+    return (Array.isArray(role) && (every && role.every((x) => this.roles.cache.has(x)) || !every && role.some((x) => this.roles.cache.has(x))) || !Array.isArray(role) && this.roles.cache.has(role))
+  };
 };
