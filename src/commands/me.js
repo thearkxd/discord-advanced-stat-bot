@@ -61,7 +61,7 @@ module.exports = {
     let currentRank = client.ranks.filter(x => (coinData ? coinData.coin : 0) >= x.coin);
     currentRank = currentRank[currentRank.length-1];
 
-    const coinStatus = conf.staffs.some(x => message.member.roles.cache.has(x)) && client.ranks.length > 0 ?
+    const coinStatus = member.hasRole(conf.staffs) && client.ranks.length > 0 ?
     `**➥ Puan Durumu:** ${taggedData ? `\nTag aldırdığı üye sayısı: \`${taggedData.taggeds.length}\`` : ""}
     - Puanınız: \`${coinData ? coinData.coin : 0}\`, Gereken: \`${maxValue.coin}\` 
     ${progressBar(coinData ? coinData.coin : 0, maxValue.coin, 8)} \`${coinData ? coinData.coin : 0} / ${maxValue.coin}\`

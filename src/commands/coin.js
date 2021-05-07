@@ -22,8 +22,8 @@ module.exports = {
       await coin.findOneAndUpdate({ guildID: message.guild.id, userID: member.user.id }, { $inc: { coin: count } }, { upsert: true });
       const coinData = await coin.findOne({ guildID: message.guild.id, userID: member.user.id });
       let addedRoles = "";
-      if (coinData && client.ranks.some(x => coinData.coin >= x.coin && !member.roles.cache.has(x.role))) {
-        const roles = client.ranks.filter(x => coinData.coin >= x.coin && !member.roles.cache.has(x.role));
+      if (coinData && client.ranks.some(x => coinData.coin >= x.coin && !member.hasRole(x.role))) {
+        const roles = client.ranks.filter(x => coinData.coin >= x.coin && !member.hasRole(x.role));
         addedRoles = roles;
         member.roles.add(roles[roles.length-1].role);
         embed.setColor("GREEN");
@@ -42,8 +42,8 @@ module.exports = {
       await coin.findOneAndUpdate({ guildID: message.guild.id, userID: member.user.id }, { $inc: { coin: -count } }, { upsert: true });
       coinData = await coin.findOne({ guildID: message.guild.id, userID: member.user.id });
       let removedRoles = "";
-      if (coinData && client.ranks.some(x => coinData.coin < x.coin && member.roles.cache.has(x.role))) {
-        const roles = client.ranks.filter(x =>  coinData.coin < x.coin && member.roles.cache.has(x.role));
+      if (coinData && client.ranks.some(x => coinData.coin < x.coin && member.hasRole(x.role))) {
+        const roles = client.ranks.filter(x =>  coinData.coin < x.coin && member.hasRole(x.role));
         removedRoles = roles;
         roles.forEach(x => {
           member.roles.remove(x.role)
@@ -63,15 +63,15 @@ module.exports = {
       await coin.findOneAndUpdate({ guildID: message.guild.id, userID: member.user.id }, { $inc: { coin: count } }, { upsert: true });
       await coin.findOneAndUpdate({ guildID: message.guild.id, userID: message.author.id }, { $inc: { coin: -count } }, { upsert: true });
       coinData = await coin.findOne({ guildID: message.guild.id, userID: message.author.id });
-      if (coinData && client.ranks.some(x => coinData.coin < x.coin && message.member.roles.cache.has(x.role))) {
-        const roles = client.ranks.filter(x =>  coinData.coin < x.coin && message.member.roles.cache.has(x.role));
+      if (coinData && client.ranks.some(x => coinData.coin < x.coin && message.member.hasRole(x.role))) {
+        const roles = client.ranks.filter(x =>  coinData.coin < x.coin && message.member.hasRole(x.role));
         roles.forEach(x => {
           message.member.roles.remove(x.role)
         });
       }
       const coinData2 = await coin.findOne({ guildID: message.guild.id, userID: member.user.id });
-      if (coinData2 && client.ranks.some(x => coinData2.coin >= x.coin && !member.roles.cache.has(x.role))) {
-        const roles = client.ranks.filter(x => coinData2.coin >= x.coin && !member.roles.cache.has(x.role));
+      if (coinData2 && client.ranks.some(x => coinData2.coin >= x.coin && !member.hasRole(x.role))) {
+        const roles = client.ranks.filter(x => coinData2.coin >= x.coin && !member.hasRole(x.role));
         member.roles.add(roles[roles.length-1].role);
       }
       

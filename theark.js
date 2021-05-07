@@ -9,6 +9,7 @@ client.ranks = [];
 require("./src/handlers/commandHandler");
 require("./src/handlers/eventHandler");
 require("./src/handlers/mongoHandler");
+require("./src/handlers/functionHandler")(client);
 
 client
   .login(settings.token)

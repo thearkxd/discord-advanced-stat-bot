@@ -13,8 +13,8 @@ module.exports = {
       const member = message.mentions.members.first() || message.guild.members.cache.get(args[1]);
       if (!member) return message.channel.send(embed.setDescription("Bir kullanıcı belirtmelisin!"));
 
-      if (client.ranks.some(x => member.roles.cache.has(x.role))) {
-        let rank = client.ranks.filter(x => member.roles.cache.has(x.role));
+      if (client.ranks.some(x => member.hasRole(x.role))) {
+        let rank = client.ranks.filter(x => member.hasRole(x.role));
         rank = rank[rank.length-1];
         await coin.findOneAndUpdate({ guildID: message.guild.id, userID: member.user.id }, { $set: { coin: rank.coin } }, { upsert: true });
         message.channel.send(embed.setDescription(`${member.toString()} üyesinde <@&${rank.role}> rolü bulundu ve coini ${rank.coin} olarak değiştirildi!`));
@@ -25,8 +25,8 @@ module.exports = {
       if (role.members.length === 0) return message.channel.send(embed.setDescription("Bu rolde üye bulunmuyor!"));
       role.members.forEach(async member => {
         if (member.user.bot) return;
-        if (client.ranks.some(x => member.roles.cache.has(x.role))) {
-          let rank = client.ranks.filter(x => member.roles.cache.has(x.role));
+        if (client.ranks.some(x => member.hasRole(x.role))) {
+          let rank = client.ranks.filter(x => member.hasRole(x.role));
           rank = rank[rank.length-1];
           await coin.findOneAndUpdate({ guildID: message.guild.id, userID: member.user.id }, { $set: { coin: rank.coin } }, { upsert: true });
           message.channel.send(embed.setDescription(`${member.toString()} üyesinde <@&${rank.role}> rolü bulundu ve coini ${rank.coin} olarak değiştirildi!`));
