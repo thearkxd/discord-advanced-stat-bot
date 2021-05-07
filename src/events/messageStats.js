@@ -12,7 +12,7 @@ const nums = new Map();
 module.exports = async (message) => {
   if (message.author.bot || !message.guild || message.content.startsWith(settings.prefix)) return;
   
-  if (conf.staffs.some(x => message.member.roles.cache.has(x))) {
+  if (message.member.hasRole(conf.staffs, false)) {
     const num = nums.get(message.author.id);
     if (num && (num % conf.messageCount) === 0) {
       nums.set(message.author.id, num + 1);

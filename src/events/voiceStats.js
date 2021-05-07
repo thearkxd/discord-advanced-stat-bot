@@ -30,7 +30,7 @@ module.exports = async (oldState, newState) => {
 };
 
 async function saveDatas(user, channel, data) {
-  if (conf.staffs.some(x => user.member.roles.cache.has(x))) {
+  if (user.member.hasRole(conf.staffs, false)) {
     if (channel.parent && conf.publicParents.includes(channel.parentID)) {
       if (data >= (1000 * 60) * conf.voiceCount) await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: Math.floor(parseInt(data/1000/60) / conf.voiceCount) * conf.publicCoin } }, { upsert: true });
     } else if (data >= (1000 * 60) * conf.voiceCount) await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: Math.floor(parseInt(data/1000/60) / conf.voiceCount) * conf.voiceCoin } }, { upsert: true });
