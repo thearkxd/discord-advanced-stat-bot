@@ -33,7 +33,7 @@ module.exports = {
       if (!role && !conf.staffs.some((x) => member.roles.cache.has(x))) return message.channel.error(message, "Bu üye bir yetkili değil!");
       if (!type || !["invite", "ses", "mesaj", "taglı", "kayıt", "şema", "schema"].includes(type)) return message.channel.error(message, "Verilecek görev tipini belirtmelisin!");
       if (["şema", "schema"].includes(args[2])) {
-        const id = args[2];
+        const id = args[3];
         if (!id) return message.channel.error(message, "Bir şema ID'si belirtmelisin!");
         const schema = client.tasks.find((x) => x.id === id);
         if (!schema) return message.channel.error(message, `${id} ID'li bir görev şeması bulunamadı!`);
@@ -93,7 +93,7 @@ module.exports = {
         Şema ID: \`${client.tasks.length}\`
         Görev Tipi: \`${type}\`
         Görev Süresi: \`${ms(duration).replace("h", " saat").replace("m", " dakika").replace("s", " saniye")}\`
-        Görev Tamamlama Sayısı: \`${count}\`
+        Görev Tamamlama Sayısı: \`${type === "ses" ? count/1000/60 + "dakika" : count}\`
         Görev Ödülü: \`${prizeCount} coin\`
         `));
       } else if (["sil", "delete"].includes(args[1])) {
