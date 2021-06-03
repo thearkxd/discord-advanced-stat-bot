@@ -11,7 +11,7 @@ module.exports = {
   /**
    * @param {Client} client
    * @param {Message} message
-   * @param {Array<String>} args
+   * @param {Array<String|Number>} args
    * @param {MessageEmbed} embed
    * @returns {Promise<void>}
    */
@@ -19,14 +19,14 @@ module.exports = {
     if (!message.member.hasPermission(8)) return;
     const coin = args[1];
     if (["ekle", "add"].includes(args[0])) {
-      if (!coin) return message.channel.error(message, "Eklenecek yetkinin coinini belirtmelisin!");
+      if (!coin || isNaN(coin)) return message.channel.error(message, "Eklenecek yetkinin coinini belirtmelisin!");
       if (client.ranks.some((x) => x.coin === coin)) return message.channel.error(message, `${coin} coine ulaşıldığında verilecek roller zaten ayarlanmış!`);
       const roles = message.mentions.roles.array();
       if (!roles || !roles.length) return message.channel.error(message, "Eklenecek yetkinin rol(leri) belirtmelisin!");
       client.ranks = global.rankdb.push("ranks", { role: roles.map((x) => x.id), coin: parseInt(coin) });
       message.channel.send(embed.setDescription(`${coin} coine ulaşıldığında verilecek roller ayarlandı! \nVerilecek Roller: ${roles.map((x) => `<@&${x.id}>`).join(", ")}`));
     } else if (["sil", "delete", "remove"].includes(args[0])) {
-      if (!coin) return message.channel.error(message, "Eklenecek yetkinin coinini belirtmelisin!");
+      if (!coin|| isNaN(coin)) return message.channel.error(message, "Silinecek yetkinin coinini belirtmelisin!");
       if (!client.ranks.some((x) => x.coin === coin)) return message.channel.error(message, `${coin} coine ulaşıldığında verilecek roller ayarlanmamış!`);
       client.ranks = global.rankdb.set("ranks", client.ranks.filter((x) => x.coin !== coin));
       message.channel.send(embed.setDescription(`${coin} coine ulaşıldığında verilecek roller silindi!`));
