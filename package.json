@@ -1,12 +1,14 @@
 {
-  "name": "discord-stat",
+  "name": "discord-advanced-stat-bot",
   "version": "0.0.1",
-  "description": "A simple Discord stat bot.",
+  "description": "An advanced Discord stat bot.",
   "main": "theark.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "start:dev": "nodemon ."
   },
   "dependencies": {
+    "ark.db": "^2.4.6",
     "cron": "^1.8.2",
     "discord.js": "^12.5.1",
     "moment": "^2.29.1",
@@ -15,6 +17,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^7.17.0"
+    "eslint": "^7.17.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.0"
   }
 }

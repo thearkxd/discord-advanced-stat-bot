@@ -6,9 +6,17 @@ module.exports = {
   conf: {
     aliases: ["tag-aldır", "taglıaldır"],
     name: "tagaldır",
-    help: "tagaldır [kullanıcı]"
+    help: "tagaldır [kullanıcı]",
+    enabled: conf.coinSystem
   },
 
+  /**
+   * @param {Client} client
+   * @param {Message} message
+   * @param {Array<string>} args
+   * @param {MessageEmbed} embed
+   * @returns {Promise<void>}
+   */
   run: async (client, message, args, embed) => {
     if (!conf.staffs.some(x => message.member.roles.cache.has(x))) return;
     const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
@@ -25,10 +33,10 @@ module.exports = {
     msg.awaitReactions((reaction, user) => ["✅", "❌"].includes(reaction.emoji.name) && user.id === member.user.id, {
       max: 1,
       time: 30000,
-      errors: ['time']
+      errors: ["time"]
     }).then(async collected => {
       const reaction = collected.first();
-      if (reaction.emoji.name === '✅') {
+      if (reaction.emoji.name === "✅") {
         await coin.findOneAndUpdate({ guildID: member.guild.id, userID: message.author.id }, { $inc: { coin: conf.taggedCoin } }, { upsert: true });
         embed.setColor("GREEN");
         msg.edit(embed.setDescription(`${member.toString()} üyesine başarıyla tag aldırıldı!`));
@@ -39,4 +47,4 @@ module.exports = {
       }
     }).catch(() => msg.edit(embed.setDescription("Tag aldırma işlemi iptal edildi!")));
   }
-}
+};

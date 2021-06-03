@@ -1,11 +1,13 @@
 const { Client, Collection } = require("discord.js");
-const client = (global.client = new Client());
+const client = (global.client = new Client({ fetchAllMembers: true }));
 const settings = require("./src/configs/settings.json");
+const { Database } = require("ark.db");
+global.confdb = new Database("./src/configs/config.json");
+const rankdb = global.rankdb = new Database("./src/configs/ranks.json");
 client.commands = new Collection();
-client.aliases = new Collection();
-client.invites = new Collection();
 client.cooldown = new Map();
-client.ranks = [];
+client.ranks = rankdb.get("ranks") ? rankdb.get("ranks").sort((a, b) => b.coin - a.coin) : [];
+client.tasks = rankdb.get("tasks") || [];
 require("./src/handlers/commandHandler");
 require("./src/handlers/eventHandler");
 require("./src/handlers/mongoHandler");

@@ -1,12 +1,21 @@
 const coin = require("../schemas/coin");
+const conf = require("../configs/config.json");
 
 module.exports = {
   conf: {
     aliases: ["senkron"],
     name: "senkronize",
-    help: "senkronize [user] [kullanıcı] / [role] [rol]"
+    help: "senkronize [user] [kullanıcı] / [role] [rol]",
+    enabled: conf.coinSystem
   },
 
+  /**
+   * @param {Client} client
+   * @param {Message} message
+   * @param {Array<string>} args
+   * @param {MessageEmbed} embed
+   * @returns {Promise<void>}
+   */
   run: async (client, message, args, embed) => {
     if (!message.member.hasPermission(8)) return;
     if (args[0] === "kişi" || args[0] === "user") {

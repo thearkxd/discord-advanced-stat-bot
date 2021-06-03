@@ -9,7 +9,7 @@
 * Daha sonra src klasörünün içindeki configs klasörünün içine gir `settings.json` ve `config.json` dosyalarının içindeki bilgileri doldur.
 * Sonra klasörün içerisinde bir `powershell` ya da `cmd` penceresi aç.
 * ```npm install``` yazarak tüm modülleri kur.
-* Kurulum bittikten sonra ```npm start``` yaz ve botu başlat.
+* Kurulum bittikten sonra ```npm start``` yaz ve botu başlat.
 
 # Gerekli Ayarlar
 `config.json` dosyamıza gelerek botun kaç mesajda kaç coin vereceği gibi bilgileri ayarlıyoruz.
@@ -22,7 +22,6 @@ client.ranks = [
 Bu şekilde yaparsanız 1 coine ulaşılınca ID'sini girdiğiniz rolü verecektir.
 Bunu istediğiniz gibi arttırabilirsiniz.
 Botu 2 günde yazdığımız için rank sistemini ayarlamalı yapmadım. Eğer çok istek gelirse ayarlamalı yaparım.
-NOT: Eğer `client.ranks` kısmını doldurmazsanız bot hata verecektir!
 
 Komutlarda girili olan emojileri değiştirmeyi unutmayınız!
 
@@ -33,10 +32,9 @@ Eğer bir kullanıcıda `config.json` dosyasındaki staffs kısmına ID'sini gir
 
 Senkronize komutu ise şu işe yarar; Diyelim siz `client.ranks` kısmına `x, y ve z` rollerini girdiniz ve botu sunucuya eklediniz. Fakat bende botu eklediğiniz zaman halihazırda `z` rolü vardı. Eğer siz benim üstümde senkronize komutunu kullanmazsanız, ben yetki atladığım zaman bot benim `z` rolümü alıp bana `x` rolü verecektir. Fakat eğer senkronize komutunu kullanırsanız, bot benim coinimi, `z` rolüne atadığınız coin ile eşitleyecektir.
 
-Botu Glitch'te kullanmak için `package.json` dosyasını Glitch uyumlu hale getirmeniz gerekmektedir!
-
 # Görseller:
-<img src="https://cdn.discordapp.com/attachments/717686233027051612/816195201151270932/unknown.png">
+<img src="https://cdn.discordapp.com/attachments/770738442744627261/850039763268141096/unknown.png">
+<img src="https://cdn.discordapp.com/attachments/770738442744627261/850040014216757278/unknown.png">
 
 # İletişim
 * [Discord Sunucum](https://discord.gg/UEPcFtytcc)

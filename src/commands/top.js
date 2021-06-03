@@ -7,14 +7,23 @@ const voiceGuildChannel = require("../schemas/voiceGuildChannel");
 const messageUser = require("../schemas/messageUser");
 const voiceUser = require("../schemas/voiceUser");
 const coin = require("../schemas/coin");
+const conf = require("../configs/config.json");
 
 module.exports = {
   conf: {
     aliases: [],
     name: "top",
-    help: "top"
+    help: "top",
+    enabled: true
   },
-  
+
+  /**
+   * @param {Client} client
+   * @param {Message} message
+   * @param {Array<string>} args
+   * @param {MessageEmbed} embed
+   * @returns {Promise<void>}
+   */
   run: async (client, message, args, embed) => {
     const messageChannelData = await messageGuildChannel.find({ guildID: message.guild.id }).sort({ channelData: -1 });
     const voiceChannelData = await voiceGuildChannel.find({ guildID: message.guild.id }).sort({ channelData: -1 });
@@ -26,17 +35,17 @@ module.exports = {
 
     let coinSum = 0;
 
-    const messageChannels = messageChannelData.splice(0, 5).map((x, index) => `\`${index+1}.\` <#${x.channelID}>: \`${Number(x.channelData).toLocaleString()} mesaj\``).join(`\n`);
-    const voiceChannels = voiceChannelData.splice(0, 5).map((x, index) => `\`${index+1}.\` <#${x.channelID}>: \`${moment.duration(x.channelData).format("H [saat], m [dakika] s [saniye]")}\``).join(`\n`);
-    const messageUsers = messageUsersData.splice(0, 5).map((x, index) => `\`${index+1}.\` <@${x.userID}>: \`${Number(x.topStat).toLocaleString()} mesaj\``).join(`\n`);
-    const voiceUsers = voiceUsersData.splice(0, 5).map((x, index) => `\`${index+1}.\` <@${x.userID}>: \`${moment.duration(x.topStat).format("H [saat], m [dakika] s [saniye]")}\``).join(`\n`);
+    const messageChannels = messageChannelData.splice(0, 5).map((x, index) => `\`${index+1}.\` <#${x.channelID}>: \`${Number(x.channelData).toLocaleString()} mesaj\``).join("\n");
+    const voiceChannels = voiceChannelData.splice(0, 5).map((x, index) => `\`${index+1}.\` <#${x.channelID}>: \`${moment.duration(x.channelData).format("H [saat], m [dakika] s [saniye]")}\``).join("\n");
+    const messageUsers = messageUsersData.splice(0, 5).map((x, index) => `\`${index+1}.\` <@${x.userID}>: \`${Number(x.topStat).toLocaleString()} mesaj\``).join("\n");
+    const voiceUsers = voiceUsersData.splice(0, 5).map((x, index) => `\`${index+1}.\` <@${x.userID}>: \`${moment.duration(x.topStat).format("H [saat], m [dakika] s [saniye]")}\``).join("\n");
     const coinUsers = coinData.splice(0, 5).map((x, index) => {
       coinSum += x.coin;
-      return `\`${index+1}.\` <@${x.userID}>: \`${Number(x.coin).toLocaleString()} coin\``
-    }).join(`\n`);
+      return `\`${index+1}.\` <@${x.userID}>: \`${Number(x.coin).toLocaleString()} coin\``;
+    }).join("\n");
 
-    embed.setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }))
-    embed.setThumbnail(message.guild.iconURL({ dynamic: true, size: 2048 }))
+    embed.setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }));
+    embed.setThumbnail(message.guild.iconURL({ dynamic: true, size: 2048 }));
     message.channel.send(embed.setDescription(`
     ${message.guild.name} sunucusunun toplam verileri
     **───────────────**
@@ -55,10 +64,12 @@ module.exports = {
     **➥ Mesaj Kanal Bilgileri:**
     ${messageChannels.length > 0 ? messageChannels : "Veri Bulunmuyor."}
 
+    ${conf.coinSystem ? `
     **───────────────**
 
     **➥ Coin Bilgileri: \`(Toplam ${coinSum})\`**
     ${coinUsers.length > 0 ? coinUsers : "Veri Bulunmuyor."}
-    `))
+    ` : ""}
+    `));
   }
 };

@@ -6,7 +6,7 @@ fs.readdir("./src/events", (err, files) => {
   files
     .filter((file) => file.endsWith(".js"))
     .forEach((file) => {
-      let prop = require(`../events/${file}`);
+      const prop = require(`../events/${file}`);
       if (!prop.conf) return;
       client.on(prop.conf.name, prop);
       console.log(`[EVENT] ${prop.conf.name} loaded!`);

@@ -8,29 +8,39 @@ const userParent = require("../schemas/voiceUserParent");
 const { MessageEmbed } = require("discord.js");
 const coin = require("../schemas/coin");
 const client = global.client;
+const tasks = require("../schemas/task");
 
+/**
+ * @param {VoiceState} oldState
+ * @param {VoiceState} newState
+ * @returns {Promise<void>}
+ */
 module.exports = async (oldState, newState) => {
   if ((oldState.member && oldState.member.user.bot) || (newState.member && newState.member.user.bot)) return;
-  
+
   if (!oldState.channelID && newState.channelID) await joinedAt.findOneAndUpdate({ userID: newState.id }, { $set: { date: Date.now() } }, { upsert: true });
-
   let joinedAtData = await joinedAt.findOne({ userID: oldState.id });
-
   if (!joinedAtData) await joinedAt.findOneAndUpdate({ userID: oldState.id }, { $set: { date: Date.now() } }, { upsert: true });
   joinedAtData = await joinedAt.findOne({ userID: oldState.id });
   const data = Date.now() - joinedAtData.date;
 
   if (oldState.channelID && !newState.channelID) {
-    await saveDatas(oldState, oldState.channel, data);
+    await saveData(oldState, oldState.channel, data);
     await joinedAt.deleteOne({ userID: oldState.id });
   } else if (oldState.channelID && newState.channelID) {
-    await saveDatas(oldState, oldState.channel, data);
+    await saveData(oldState, oldState.channel, data);
     await joinedAt.findOneAndUpdate({ userID: oldState.id }, { $set: { date: Date.now() } }, { upsert: true });
   }
 };
 
-async function saveDatas(user, channel, data) {
-  if (user.member.hasRole(conf.staffs, false)) {
+/**
+ * @param {VoiceState} user
+ * @param {VoiceChannel} channel
+ * @param {Number} data
+ * @returns {Promise<void>}
+ */
+async function saveData(user, channel, data) {
+  if (conf.coinSystem && conf.staffs.some(x => user.member.roles.cache.has(x)) && !conf.ignoreChannels.some((x) => channel.id === x)) {
     if (channel.parent && conf.publicParents.includes(channel.parentID)) {
       if (data >= (1000 * 60) * conf.voiceCount) await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: Math.floor(parseInt(data/1000/60) / conf.voiceCount) * conf.publicCoin } }, { upsert: true });
     } else if (data >= (1000 * 60) * conf.voiceCount) await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: Math.floor(parseInt(data/1000/60) / conf.voiceCount) * conf.voiceCoin } }, { upsert: true });
@@ -47,6 +57,19 @@ async function saveDatas(user, channel, data) {
       }
     }
   }
+
+  const taskData = await tasks.find({ guildID: user.guild.id, userID: user.id, type: "ses", active: true });
+  taskData.forEach(async (x) => {
+    if (x.channels && x.channels.some((x) => x !== channel.id)) return;
+    x.completedCount += data;
+    if (x.completedCount === x.count) {
+      x.active = false;
+      x.completed = true;
+      await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: x.prizeCount } });
+    }
+    await x.save();
+  });
+
   await voiceUser.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { topStat: data, dailyStat: data, weeklyStat: data, twoWeeklyStat: data } }, { upsert: true });
   await voiceGuild.findOneAndUpdate({ guildID: user.guild.id }, { $inc: { topStat: data, dailyStat: data, weeklyStat: data, twoWeeklyStat: data } }, { upsert: true });
   await guildChannel.findOneAndUpdate({ guildID: user.guild.id, channelID: channel.id }, { $inc: { channelData: data } }, { upsert: true });

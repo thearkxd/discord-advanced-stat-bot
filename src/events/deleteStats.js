@@ -4,8 +4,11 @@ const messageGuild = require("../schemas/messageGuild");
 const voiceGuild = require("../schemas/voiceGuild");
 const messageUser = require("../schemas/messageUser");
 const voiceUser = require("../schemas/voiceUser");
+const tasks = require("../schemas/task");
 
 module.exports = () => {
+  setInterval(async () => await tasks.findOneAndUpdate({ guildID: guild.id, active: true, finishDate: { $lte: Date.now() } }, { active: false }), 1000 * 60 * 60);
+
   const daily = new CronJob("0 0 * * *", () => {
     client.guilds.cache.forEach(async (guild) => {
       await messageGuild.findOneAndUpdate({ guildID: guild.id }, { $set: { dailyStat: 0 } });
@@ -33,7 +36,7 @@ module.exports = () => {
       await messageUser.findOneAndUpdate({ guildID: guild.id }, { $set: { twoWeeklyStat: 0 } });
       await voiceUser.findOneAndUpdate({ guildID: guild.id }, { $set: { twoWeeklyStat: 0 } });
     });
-  }, null, true, "Europe/Istanbul")
+  }, null, true, "Europe/Istanbul");
   twoWeekly.start();
 };
 
