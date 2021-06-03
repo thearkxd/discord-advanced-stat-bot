@@ -58,7 +58,7 @@ async function saveData(user, channel, data) {
     }
   }
 
-  user.member.updateTask(user.guild.id, "mesaj", data, channel);
+  user.member.updateTask(user.guild.id, "ses", data, channel);
 
   await voiceUser.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { topStat: data, dailyStat: data, weeklyStat: data, twoWeeklyStat: data } }, { upsert: true });
   await voiceGuild.findOneAndUpdate({ guildID: user.guild.id }, { $inc: { topStat: data, dailyStat: data, weeklyStat: data, twoWeeklyStat: data } }, { upsert: true });

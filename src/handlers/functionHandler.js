@@ -71,12 +71,12 @@ module.exports = function (client) {
 						taskMessage = `**Sunucumuzda ${x.count} kişi kayıt et!**`;
 						break;
 				}
-				const embed = new MessageEmbed().setColor(this.displayHexColor).setAuthor(this.displayName, this.user.avatarURL({ dynamic: true, size: 2048 }));
+				const embed = new MessageEmbed().setColor(this.displayHexColor).setAuthor(this.displayName, this.user.avatarURL({ dynamic: true, size: 2048 })).setThumbnail("https://img.itch.zone/aW1nLzIzNzE5MzEuZ2lm/original/GcEpW9.gif");
 				if (channel && channel.type === "text") channel.send(embed.setDescription(`
 				${this.toString()} Tebrikler! ${type.charAt(0).toLocaleUpperCase() + type.slice(1)} görevini başarıyla tamamladın.
 				
 				${taskMessage}
-				${emojis.coin} \`${x.coin} coin kazandın!\`
+				${emojis.coin} \`${x.prizeCount} coin kazandın!\`
 				`));
 			}
 			await x.save();
