@@ -1,6 +1,7 @@
 const coin = require("../schemas/coin");
 const taggeds = require("../schemas/taggeds");
 const conf = require("../configs/config.json");
+const tasks = require("../schemas/task");
 
 module.exports = {
   conf: {
@@ -30,17 +31,24 @@ module.exports = {
     msg.react("✅");
     msg.react("❌");
 
-    msg.awaitReactions((reaction, user) => ["✅", "❌"].includes(reaction.emoji.name) && user.id === member.user.id, {
-      max: 1,
-      time: 30000,
-      errors: ["time"]
-    }).then(async collected => {
+    msg.awaitReactions((reaction, user) => ["✅", "❌"].includes(reaction.emoji.name) && user.id === member.user.id, { max: 1, time: 30000, errors: ["time"] }).then(async collected => {
       const reaction = collected.first();
       if (reaction.emoji.name === "✅") {
         await coin.findOneAndUpdate({ guildID: member.guild.id, userID: message.author.id }, { $inc: { coin: conf.taggedCoin } }, { upsert: true });
         embed.setColor("GREEN");
         msg.edit(embed.setDescription(`${member.toString()} üyesine başarıyla tag aldırıldı!`));
         await taggeds.findOneAndUpdate({ guildID: message.guild.id, userID: message.author.id }, { $push: { taggeds: member.user.id } }, { upsert: true });
+
+        const taskData = await tasks.find({ guildID: message.guild.id, userID: message.author.id, type: "mesaj", active: true });
+        taskData.forEach(async (x) => {
+          x.completedCount += 1;
+          if (x.completedCount === x.count) {
+            x.active = false;
+            x.completed = true;
+            await coin.findOneAndUpdate({ guildID: message.guild.id, userID: message.author.id }, { $inc: { coin: x.prizeCount } });
+          }
+          await x.save();
+        });
       } else {
         embed.setColor("RED");
         msg.edit(embed.setDescription(`${member.toString()} üyesi, tag aldırma teklifini reddetti!`));
