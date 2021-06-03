@@ -35,7 +35,7 @@ module.exports = {
       if (["şema", "schema"].includes(args[2])) {
         const id = args[3];
         if (!id) return message.channel.error(message, "Bir şema ID'si belirtmelisin!");
-        const schema = client.tasks.find((x) => x.id === id);
+        const schema = client.tasks.find((x) => x.id === parseInt(id));
         if (!schema) return message.channel.error(message, `${id} ID'li bir görev şeması bulunamadı!`);
         if (role) {
           const members = role.members.filter((x) => conf.staffs.some((r) => x.roles.cache.has(r)));
@@ -105,7 +105,7 @@ module.exports = {
       else if (["bilgi", "info"].includes(args[1])) {
         const id = args[2];
         if (!id) return message.channel.error(message, "Bir şema ID'si belirtmelisin!");
-        const schema = client.tasks.find((x) => x.id === id);
+        const schema = client.tasks.find((x) => x.id === parseInt(id));
         if (!schema) return message.channel.error(message, `${id} ID'li bir görev şeması bulunamadı!`);
         message.channel.send(embed.setDescription(`
         ${id} ID'li görev şemasının bilgileri;
