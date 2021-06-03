@@ -58,17 +58,7 @@ async function saveData(user, channel, data) {
     }
   }
 
-  const taskData = await tasks.find({ guildID: user.guild.id, userID: user.id, type: "ses", active: true });
-  taskData.forEach(async (x) => {
-    if (x.channels && x.channels.some((x) => x !== channel.id)) return;
-    x.completedCount += data;
-    if (x.completedCount === x.count) {
-      x.active = false;
-      x.completed = true;
-      await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: x.prizeCount } });
-    }
-    await x.save();
-  });
+  user.member.updateTask(user.guild.id, "mesaj", data, channel);
 
   await voiceUser.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { topStat: data, dailyStat: data, weeklyStat: data, twoWeeklyStat: data } }, { upsert: true });
   await voiceGuild.findOneAndUpdate({ guildID: user.guild.id }, { $inc: { topStat: data, dailyStat: data, weeklyStat: data, twoWeeklyStat: data } }, { upsert: true });

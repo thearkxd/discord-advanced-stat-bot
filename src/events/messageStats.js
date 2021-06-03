@@ -7,7 +7,6 @@ const { MessageEmbed } = require("discord.js");
 const coin = require("../schemas/coin");
 const client = global.client;
 const nums = new Map();
-const tasks = require("../schemas/task");
 const settings = require("../configs/settings.json");
 
 /**
@@ -35,17 +34,7 @@ module.exports = async (message) => {
       }
     } else nums.set(message.author.id, num ? num + 1 : 1);
 
-    const taskData = await tasks.find({ guildID: message.guild.id, userID: message.author.id, type: "mesaj", active: true });
-    taskData.forEach(async (x) => {
-      if (x.channels && x.channels.some((x) => x !== message.channel.id)) return;
-      x.completedCount += 1;
-      if (x.completedCount === x.count) {
-        x.active = false;
-        x.completed = true;
-        await coin.findOneAndUpdate({ guildID: message.guild.id, userID: message.author.id }, { $inc: { coin: x.prizeCount } });
-      }
-      await x.save();
-    });
+    message.member.updateTask(message.guild.id, "mesaj", 1, message.channel);
   }
 
   await messageUser.findOneAndUpdate({ guildID: message.guild.id, userID: message.author.id }, { $inc: { topStat: 1, dailyStat: 1, weeklyStat: 1, twoWeeklyStat: 1 } }, { upsert: true });

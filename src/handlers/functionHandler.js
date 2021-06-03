@@ -1,6 +1,7 @@
 const { GuildMember, TextChannel, MessageEmbed } = require("discord.js");
 const { emojis } = require("../configs/config.json");
 const task = require("../schemas/task");
+const coin = require("../schemas/coin");
 
 /**
  * @param { Client } client
@@ -33,6 +34,53 @@ module.exports = function (client) {
 	GuildMember.prototype.giveTask = async function (guildID, type, count, prizeCount, active = true, duration, channels = null) {
 		const id = await task.find({ guildID });
 		return await new task({ guildID, userID: this.user.id, id: id ? id.length + 1 : 1, type, count, prizeCount, active, finishDate: Date.now() + duration, channels }).save();
+	};
+
+	/**
+	 * @param {String} guildID
+	 * @param {String} type
+	 * @param {Number} data
+	 * @param {TextChannel|VoiceChannel} channel
+	 * @returns {Promise<void>}
+	 */
+	GuildMember.prototype.updateTask = async function (guildID, type, data, channel = null) {
+		const taskData = await task.find({ guildID, userID: this.user.id, type, active: true });
+		taskData.forEach(async (x) => {
+			if (channel && x.channels && x.channels.some((x) => x !== channel.id)) return;
+			x.completedCount += data;
+			if (x.completedCount === x.count) {
+				x.active = false;
+				x.completed = true;
+				await coin.findOneAndUpdate({ guildID, userID: this.user.id }, { $inc: { coin: x.prizeCount } });
+
+				let taskMessage;
+				switch (x.type) {
+					case "invite":
+						taskMessage = `**Sunucumuza ${x.count} kişi davet et!**`;
+						break;
+					case "mesaj":
+						taskMessage = x.channels ? `**${x.channels.map((x) => `<#${x}>`).join(", ")} ${x.channels.length > 1 ? "kanallarında" : "kanalında"} ${x.count} mesaj at!**` : `**Metin kanallarında ${x.count} mesaj at!**`;
+						break;
+					case "ses":
+						taskMessage = x.channels ? `**${x.channels.map((x) => `<#${x}>`).join(", ")} ${x.channels.length > 1 ? "kanallarında" : "kanalında"} ${x.count/1000/60} dakika vakit geçir!` : `**Seste ${x.count/1000/60} dakika vakit geçir!**`;
+						break;
+					case "taglı":
+						taskMessage = `**${x.count} kişiye tag aldır!**`;
+						break;
+					case "kayıt":
+						taskMessage = `**Sunucumuzda ${x.count} kişi kayıt et!**`;
+						break;
+				}
+				const embed = new MessageEmbed().setColor(this.displayHexColor).setAuthor(this.displayName, this.user.avatarURL({ dynamic: true, size: 2048 }));
+				if (channel && channel.type === "text") channel.send(embed.setDescription(`
+				${this.toString()} Tebrikler! ${type.charAt(0).toLocaleUpperCase() + type.slice(1)} görevini başarıyla tamamladın.
+				
+				${taskMessage}
+				${emojis.coin} \`${x.coin} coin kazandın!\`
+				`));
+			}
+			await x.save();
+		});
 	};
 
 	/**

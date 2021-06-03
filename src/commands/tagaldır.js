@@ -39,16 +39,7 @@ module.exports = {
         msg.edit(embed.setDescription(`${member.toString()} üyesine başarıyla tag aldırıldı!`));
         await taggeds.findOneAndUpdate({ guildID: message.guild.id, userID: message.author.id }, { $push: { taggeds: member.user.id } }, { upsert: true });
 
-        const taskData = await tasks.find({ guildID: message.guild.id, userID: message.author.id, type: "mesaj", active: true });
-        taskData.forEach(async (x) => {
-          x.completedCount += 1;
-          if (x.completedCount === x.count) {
-            x.active = false;
-            x.completed = true;
-            await coin.findOneAndUpdate({ guildID: message.guild.id, userID: message.author.id }, { $inc: { coin: x.prizeCount } });
-          }
-          await x.save();
-        });
+        message.member.updateTask(message.guild.id, "mesaj", 1, message.channel);
       } else {
         embed.setColor("RED");
         msg.edit(embed.setDescription(`${member.toString()} üyesi, tag aldırma teklifini reddetti!`));
