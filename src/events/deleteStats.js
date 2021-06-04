@@ -7,7 +7,7 @@ const voiceUser = require("../schemas/voiceUser");
 const tasks = require("../schemas/task");
 
 module.exports = () => {
-  setInterval(async () => await tasks.findOneAndUpdate({ guildID: guild.id, active: true, finishDate: { $lte: Date.now() } }, { active: false }), 1000 * 60 * 60);
+  setInterval(async () => client.guilds.cache.forEach(async (guild) => await tasks.findOneAndUpdate({ guildID: guild.id, active: true, finishDate: { $lte: Date.now() } }, { active: false })), 1000 * 60 * 60);
 
   const daily = new CronJob("0 0 * * *", () => {
     client.guilds.cache.forEach(async (guild) => {

@@ -12,7 +12,8 @@ const schema = Schema({
 	date: { type: Number, default: Date.now() },
 	completed: { type: Boolean, default: false },
 	completedCount: { type: Number, default: 0 },
-	channels: { type: Array, default: null }
+	channels: { type: Array, default: null },
+	message: { type: String, default: "" }
 });
 
 module.exports = model("task", schema);
