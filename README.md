@@ -11,22 +11,6 @@
 * ```npm install``` yazarak tüm modülleri kur.
 * Kurulum bittikten sonra ```npm start``` yaz ve botu başlat.
 
-# Gerekli Ayarlar
-`config.json` dosyamıza gelerek botun kaç mesajda kaç coin vereceği gibi bilgileri ayarlıyoruz.
-Daha sonra `theark.js` dosyasına gelip, `client.ranks` kısmını;
-```js
-client.ranks = [
-{ role: "rol id", coin: 1 }
-]
-```
-Bu şekilde yaparsanız 1 coine ulaşılınca ID'sini girdiğiniz rolü verecektir.
-Bunu istediğiniz gibi arttırabilirsiniz.
-Botu 2 günde yazdığımız için rank sistemini ayarlamalı yapmadım. Eğer çok istek gelirse ayarlamalı yaparım.
-
-Komutlarda girili olan emojileri değiştirmeyi unutmayınız!
-
-Tada 🎉. Artık botun hazır. Dilediğin gibi kullanabilirsin.
-
 # Önemli Bilgiler!
 Eğer bir kullanıcıda `config.json` dosyasındaki staffs kısmına ID'sini girdiğin rollerden biri yoksa, bot o kullanıcıya coin eklemez ve yetkisini atlatmaz!
 
