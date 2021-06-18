@@ -29,7 +29,7 @@ module.exports = () => {
   }, null, true, "Europe/Istanbul");
   weekly.start();
 
-  const twoWeekly = new CronJob("00 00 00 1,15 * *", () => {
+  const twoWeekly = new CronJob("00 00 00 * * 0/2", () => {
     client.guilds.cache.forEach(async (guild) => {
       await messageGuild.findOneAndUpdate({ guildID: guild.id }, { $set: { twoWeeklyStat: 0 } });
       await voiceGuild.findOneAndUpdate({ guildID: guild.id }, { $set: { twoWeeklyStat: 0 } });
