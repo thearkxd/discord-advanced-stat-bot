@@ -9,7 +9,7 @@ const tasks = require("../schemas/task");
 module.exports = () => {
   setInterval(async () => client.guilds.cache.forEach(async (guild) => await tasks.findOneAndUpdate({ guildID: guild.id, active: true, finishDate: { $lte: Date.now() } }, { active: false })), 1000 * 60 * 60);
 
-  const daily = new CronJob("0 0 0 * * *", () => {
+  const daily = new CronJob("00 00 00 * * *", () => {
     client.guilds.cache.forEach(async (guild) => {
       await messageGuild.findOneAndUpdate({ guildID: guild.id }, { $set: { dailyStat: 0 } });
       await voiceGuild.findOneAndUpdate({ guildID: guild.id }, { $set: { dailyStat: 0 } });
@@ -19,7 +19,7 @@ module.exports = () => {
   }, null, true, "Europe/Istanbul");
   daily.start();
 
-  const weekly = new CronJob("0 0 0 * * 0", () => {
+  const weekly = new CronJob("00 00 00 * * 0", () => {
     client.guilds.cache.forEach(async (guild) => {
       await messageGuild.findOneAndUpdate({ guildID: guild.id }, { $set: { weeklyStat: 0 } });
       await voiceGuild.findOneAndUpdate({ guildID: guild.id }, { $set: { weeklyStat: 0 } });
@@ -29,7 +29,7 @@ module.exports = () => {
   }, null, true, "Europe/Istanbul");
   weekly.start();
 
-  const twoWeekly = new CronJob("0 0 0 1,15 * *", () => {
+  const twoWeekly = new CronJob("00 00 00 1,15 * *", () => {
     client.guilds.cache.forEach(async (guild) => {
       await messageGuild.findOneAndUpdate({ guildID: guild.id }, { $set: { twoWeeklyStat: 0 } });
       await voiceGuild.findOneAndUpdate({ guildID: guild.id }, { $set: { twoWeeklyStat: 0 } });
