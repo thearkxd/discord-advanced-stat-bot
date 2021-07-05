@@ -66,9 +66,9 @@ module.exports = {
 			!conf.funParents.includes(x.id)
 		);
 
-		const maxValue = client.ranks[client.ranks.indexOf(client.ranks.find(x => x.coin >= (coinData ? coinData.coin : 0)))] || client.ranks[client.ranks.length-1];
+		const maxValue = client.ranks[client.ranks.indexOf(client.ranks.find(x => x.coin >= (coinData ? Math.floor(coinData.coin) : 0)))] || client.ranks[client.ranks.length-1];
 
-		const coinStatus = conf.coinSystem && conf.staffs.some(x => member.roles.cache.has(x)) && client.ranks.length > 0 ? ` **➥ Puan Durumu:**\n- Puanınız: \`${coinData ? coinData.coin : 0}\`, Gereken: \`${maxValue.coin}\` \n${client.progressBar(coinData ? coinData.coin : 0, maxValue.coin, 8)} \`${coinData ? coinData.coin : 0} / ${maxValue.coin}\`` : "";
+		const coinStatus = conf.coinSystem && conf.staffs.some(x => member.roles.cache.has(x)) && client.ranks.length > 0 ? ` **➥ Puan Durumu:**\n- Puanınız: \`${coinData ? Math.floor(coinData.coin) : 0}\`, Gereken: \`${maxValue.coin}\` \n${client.progressBar(coinData ? Math.floor(coinData.coin) : 0, maxValue.coin, 8)} \`${coinData ? Math.floor(coinData.coin) : 0} / ${maxValue.coin}\`` : "";
 
 		embed.setThumbnail(member.user.avatarURL({ dynamic: true, size: 2048 }));
 		embed.setDescription(`

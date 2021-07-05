@@ -41,7 +41,7 @@ module.exports = {
     const voiceUsers = voiceUsersData.splice(0, 5).map((x, index) => `\`${index+1}.\` <@${x.userID}>: \`${moment.duration(x.topStat).format("H [saat], m [dakika] s [saniye]")}\``).join("\n");
     const coinUsers = coinData.splice(0, 5).map((x, index) => {
       coinSum += x.coin;
-      return `\`${index+1}.\` <@${x.userID}>: \`${Number(x.coin).toLocaleString()} coin\``;
+      return `\`${index+1}.\` <@${x.userID}>: \`${Number(Math.floor(x.coin)).toLocaleString()} coin\``;
     }).join("\n");
 
     embed.setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }));

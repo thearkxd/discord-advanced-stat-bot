@@ -1,11 +1,10 @@
-const fs = require("fs");
+const { readdirSync } = require("fs");
 const client = global.client;
 
-fs.readdir("./src/commands", (err, files) => {
-	if (err) console.error(err);
-	files.forEach((f) => {
-		const props = require(`../commands/${f}`);
-		console.log(`[COMMAND] ${props.conf.name} loaded!`);
-		client.commands.set(props.conf.name, props);
-	});
+const files = readdirSync("./src/commands");
+files.filter((x) => x.endsWith(".js")).forEach(async (f) => {
+	const cmd = require(`../commands/${f}`);
+	if (!cmd.conf) return;
+	client.commands.set(cmd.conf.name, cmd);
+	console.log(`[COMMAND] ${cmd.conf.name} loaded!`);
 });

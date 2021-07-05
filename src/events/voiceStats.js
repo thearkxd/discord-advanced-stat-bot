@@ -41,9 +41,9 @@ module.exports = async (oldState, newState) => {
  */
 async function saveData(user, channel, data) {
   if (conf.coinSystem && conf.staffs.some(x => user.member.roles.cache.has(x)) && !conf.ignoreChannels.some((x) => channel.id === x)) {
-    if (channel.parent && conf.publicParents.includes(channel.parentID)) {
-      if (data >= (1000 * 60) * conf.voiceCount) await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: Math.floor(parseInt(data/1000/60) / conf.voiceCount) * conf.publicCoin } }, { upsert: true });
-    } else if (data >= (1000 * 60) * conf.voiceCount) await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: Math.floor(parseInt(data/1000/60) / conf.voiceCount) * conf.voiceCoin } }, { upsert: true });
+    console.log(((data / 1000 / 60) / conf.voiceCount) * conf.voiceCoin)
+    if (channel.parent && conf.publicParents.includes(channel.parentID)) await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: ((data / 1000 / 60) / conf.voiceCount) * conf.publicCoin } }, { upsert: true });
+    else await coin.findOneAndUpdate({ guildID: user.guild.id, userID: user.id }, { $inc: { coin: ((data / 1000 / 60) / conf.voiceCount) * conf.voiceCoin } }, { upsert: true });
     const coinData = await coin.findOne({ guildID: user.guild.id, userID: user.id });
     if (coinData && client.ranks.some(x => x.coin >= coinData.coin)) {
       let newRank = client.ranks.filter(x => coinData.coin >= x.coin);

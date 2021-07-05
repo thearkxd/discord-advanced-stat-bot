@@ -1,14 +1,10 @@
-const fs = require("fs");
+const { readdirSync } = require("fs");
 const client = global.client;
 
-fs.readdir("./src/events", (err, files) => {
-  if (err) return console.error(err);
-  files
-    .filter((file) => file.endsWith(".js"))
-    .forEach((file) => {
-      const prop = require(`../events/${file}`);
-      if (!prop.conf) return;
-      client.on(prop.conf.name, prop);
-      console.log(`[EVENT] ${prop.conf.name} loaded!`);
-    });
+const files = readdirSync("./src/events");
+files.filter((x) => x.endsWith(".js")).forEach((file) => {
+  const event = require(`../events/${file}`);
+  if (!event.conf) return;
+  client.on(event.conf.name, event);
+  console.log(`[EVENT] ${event.conf.name} loaded!`);
 });
