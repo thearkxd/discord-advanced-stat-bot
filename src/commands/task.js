@@ -70,7 +70,7 @@ module.exports = {
       }
       if (role) {
         const members = role.members.filter((x) => conf.staffs.some((r) => x.roles.cache.has(r)));
-        if (!members.length) return message.channel.error(message, `${role.toString()} rolü olan kimse yetkili değil!`);
+        if (!members.size) return message.channel.error(message, `${role.toString()} rolü olan kimse yetkili değil!`);
         members.forEach(async (x) => await x.giveTask(message.guild.id, type, count, prizeCount, true, duration, channels.length ? channels.map((x) => x.id) : null, taskMessage));
         message.channel.send(embed.setDescription(`${message.mentions.roles.first().toString()} rolüne sahip olan tüm üyelere başarıyla ${type} görevi verildi! \nGörev verilen üyeler: ${members.map((x) => x.toString()).join(", ")}`));
       } else {
