@@ -16,4 +16,4 @@ require("./src/handlers/functionHandler")(client);
 client
   .login(settings.token)
   .then(() => console.log("[BOT] Bot connected!"))
-  .catch(() => console.log("[BOT] Bot can't connected!"));
+  .catch(() => console.log("[BOT] Bot failed to connect!"));
