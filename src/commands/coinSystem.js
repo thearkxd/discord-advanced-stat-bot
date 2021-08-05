@@ -14,6 +14,7 @@ module.exports = {
    * @returns {Promise<void>}
    */
   run: async (client, message, args, embed) => {
+    if (!message.member.hasPermission(8)) return;
     if (["aç", "open"].includes(args[0])) {
       if (global.confdb.get("coinSystem")) return message.channel.error(message, "Coin sistemi zaten açık!");
       global.confdb.set("coinSystem", true);
