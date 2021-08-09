@@ -46,7 +46,7 @@ module.exports = {
 
     embed.setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }));
     embed.setThumbnail(message.guild.iconURL({ dynamic: true, size: 2048 }));
-    message.channel.send(embed.setDescription(`
+    embed.setDescription(`
     ${message.guild.name} sunucusunun toplam verileri
     **───────────────**
     
@@ -70,6 +70,7 @@ module.exports = {
     **➥ Coin Bilgileri: \`(Toplam ${coinSum})\`**
     ${coinUsers.length > 0 ? coinUsers : "Veri Bulunmuyor."}
     ` : ""}
-    `));
+    `);
+    message.channel.send({ embeds: [embed] });
   }
 };

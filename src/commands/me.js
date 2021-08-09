@@ -82,7 +82,7 @@ module.exports = {
 
 		embed.setThumbnail(message.author.avatarURL({ dynamic: true, size: 2048 }));
 		embed.setDescription(`
-    ${message.author.toString()} (${message.member.roles.highest}) kişisinin sunucu verileri
+    ${message.author.toString()} (${message.member.roles.highest.toString()}) kişisinin sunucu verileri
     **───────────────**
     **➥ Ses Bilgileri:**
   • Toplam: \`${moment.duration(voiceData ? voiceData.topStat : 0).format("H [saat], m [dakika] s [saniye]")}\`
@@ -109,6 +109,6 @@ module.exports = {
     \`•\` Haftalık Mesaj: \`${Number(messageWeekly).toLocaleString()} mesaj\`
     \`•\` Günlük Mesaj: \`${Number(messageDaily).toLocaleString()} mesaj\`
     `, true);
-		message.channel.send(embed);
+		message.channel.send({ embeds: [embed] });
 	}
 };

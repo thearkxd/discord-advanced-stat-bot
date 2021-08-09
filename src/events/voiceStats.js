@@ -8,7 +8,6 @@ const userParent = require("../schemas/voiceUserParent");
 const { MessageEmbed } = require("discord.js");
 const coin = require("../schemas/coin");
 const client = global.client;
-const tasks = require("../schemas/task");
 
 /**
  * @param {VoiceState} oldState
@@ -53,7 +52,7 @@ async function saveData(user, channel, data) {
         user.member.roles.add(newRank.role);
         if (oldRank && Array.isArray(oldRank.role) && oldRank.role.some(x => user.member.roles.cache.has(x)) || oldRank && !Array.isArray(oldRank.role) && user.member.roles.cache.has(oldRank.role)) user.member.roles.remove(oldRank.role);
         const embed = new MessageEmbed().setColor("GREEN");
-        user.guild.channels.cache.get(conf.rankLog).send(embed.setDescription(`${user.member.toString()} üyesi **${coinData.coin}** coin hedefine ulaştı ve ${Array.isArray(newRank.role) ? newRank.role.map(x => `<@&${x}>`).join(", ") : `<@&${newRank.role}>`} rolü verildi!`));
+        user.guild.channels.cache.get(conf.rankLog).send({ embeds: [embed.setDescription(`${user.member.toString()} üyesi **${coinData.coin}** coin hedefine ulaştı ve ${Array.isArray(newRank.role) ? newRank.role.map(x => `<@&${x}>`).join(", ") : `<@&${newRank.role}>`} rolü verildi!`)] });
       }
     }
   }
