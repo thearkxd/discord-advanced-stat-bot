@@ -30,7 +30,7 @@ module.exports = async (message) => {
         message.member.roles.add(newRank.role);
         if (oldRank && Array.isArray(oldRank.role) && oldRank.role.some(x => message.member.roles.cache.has(x)) || oldRank && !Array.isArray(oldRank.role) && message.member.roles.cache.has(oldRank.role)) message.member.roles.remove(oldRank.role);
         const embed = new MessageEmbed().setColor("GREEN");
-        message.guild.channels.cache.get(conf.rankLog).send({ embeds: [embed.setDescription(`${message.member.toString()} üyesi **${coinData.coin}** coin hedefine ulaştı ve ${Array.isArray(newRank.role) ? newRank.role.map(x => `<@&${x}>`).join(", ") : `<@&${newRank.role}>`} rolü verildi!`)] });
+        message.guild.channels.cache.get(conf.rankLog).send(embed.setDescription(`${message.member.toString()} üyesi **${coinData.coin}** coin hedefine ulaştı ve ${Array.isArray(newRank.role) ? newRank.role.map(x => `<@&${x}>`).join(", ") : `<@&${newRank.role}>`} rolü verildi!`));
       }
     } else nums.set(message.author.id, num ? num + 1 : 1);
 
@@ -44,5 +44,5 @@ module.exports = async (message) => {
 };
 
 module.exports.conf = {
-  name: "messageCreate",
+  name: "message",
 };

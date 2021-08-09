@@ -9,7 +9,7 @@
   "coinSystem": true,
   "rankLog": "",
   "tag": "",
-  "staffs": [],
+  "staffs": ["719291360867385374"],
   "messageCount": 1,
   "messageCoin": 1,
   "voiceCount": 1,
@@ -17,12 +17,12 @@
   "publicCoin": 1,
   "taggedCoin": 1,
   "emojis": {
-    "coin": "",
-    "fillStart": "",
-    "fill": "",
-    "fillEnd": "",
-    "emptyStart": "",
-    "empty": "",
-    "emptyEnd": ""
+    "coin": "<a:coin:849626084617879552>",
+    "fillStart": "<a:fill_start:816043000198463489>",
+    "fill": "<a:fill:816043000407785522>",
+    "fillEnd": "<a:fill_end:816043000386945064>",
+    "emptyStart": "<:empty_start:849205442075820034>",
+    "empty": "<:empty:816043000341725255>",
+    "emptyEnd": "<:empty_end:816042999997268028>"
   }
 }

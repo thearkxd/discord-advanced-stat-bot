@@ -55,13 +55,12 @@ module.exports = function (client) {
 				await coin.findOneAndUpdate({ guildID, userID: this.user.id }, { $inc: { coin: x.prizeCount } });
 
 				const embed = new MessageEmbed().setColor(this.displayHexColor).setAuthor(this.displayName, this.user.avatarURL({ dynamic: true, size: 2048 })).setThumbnail("https://img.itch.zone/aW1nLzIzNzE5MzEuZ2lm/original/GcEpW9.gif");
-				embed.setDescription(`
+				if (channel && channel.type === "text") channel.send(embed.setDescription(`
 				${this.toString()} Tebrikler! ${type.charAt(0).toLocaleUpperCase() + type.slice(1)} görevini başarıyla tamamladın.
 				
 				${x.message}
 				${emojis.coin} \`${x.prizeCount} coin kazandın!\`
-				`);
-				if (channel && channel.type === "text") channel.send({ embeds: [embed] });
+				`));
 			}
 			await x.save();
 		});
@@ -81,7 +80,7 @@ module.exports = function (client) {
 				message.author.avatarURL({ dynamic: true, size: 2048 })
 			)
 			.setFooter("Developed by Theark", theark.avatarURL({ dynamic: true }));
-		return this.send(embed.setDescription({ content: text })).then((x) => {
+		return this.send(embed.setDescription(text)).then((x) => {
 			if (x.deletable) x.delete({ timeout: 10000 });
 		});
 	};
@@ -94,7 +93,7 @@ module.exports = function (client) {
 		if (!embed || !embed.description) return;
 		const text = embed.description;
 		for (let i = 0; i < Math.floor(text.length / 2048) + 1; i++) {
-			this.send({ embeds: [embed.setDescription(text.slice(i * 2048, (i + 1) * 2048))] });
+			this.send(embed.setDescription(text.slice(i * 2048, (i + 1) * 2048)));
 		}
 	};
 

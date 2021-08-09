@@ -10,7 +10,7 @@
   "dependencies": {
     "ark.db": "^2.6.9",
     "cron": "^1.8.2",
-    "discord.js": "^13.0.1",
+    "discord.js": "^12.5.1",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
     "mongoose": "^5.11.14"

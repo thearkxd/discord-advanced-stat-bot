@@ -21,10 +21,10 @@ module.exports = {
    * @returns {Promise<void>}
    */
   run: async (client, message, args, embed) => {
-    if (!message.member.permissions.has(8)) return;
+    if (!message.member.hasPermission(8)) return;
     const role = message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);
-    if (!role) return message.channel.send({ embeds: [embed.setDescription("Bir rol belirtmelisin!")] });
-    if (role.members.size === 0) return message.channel.send({ embeds: [embed.setDescription("Bu rol kimsede bulunmuyor!")] });
+    if (!role) return message.channel.send(embed.setDescription("Bir rol belirtmelisin!"));
+    if (role.members.size === 0) return message.channel.send(embed.setDescription("Bu rol kimsede bulunmuyor!"));
 
     const messageData = async (type) => {
       let data = await messageUser.find({ guildID: message.guild.id }).sort({ topStat: -1 });
@@ -46,7 +46,7 @@ module.exports = {
 
     embed.setAuthor(message.guild.name, message.guild.iconURL({ dynamic: true, size: 2048 }));
     embed.setThumbnail(message.guild.iconURL({ dynamic: true, size: 2048 }));
-    embed.setDescription(`
+    message.channel.send(embed.setDescription(`
     ${role.toString()} rolüne sahip üyelerin verileri
     **───────────────**
     
@@ -76,7 +76,6 @@ module.exports = {
     **➥ Toplam Coin Bilgileri:**
     ${await coinData()}
     ` : ""}
-    `);
-    message.channel.send({ embeds: [embed] });
+    `));
   }
 };

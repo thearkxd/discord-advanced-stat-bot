@@ -25,7 +25,7 @@ module.exports = {
 	 */
 	run: async (client, message, args, embed) => {
 		const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-		if (!member) return message.channel.send({ embeds: [embed.setDescription("Bir kullanıcı belirtmelisin!")] });
+		if (!member) return message.channel.send(embed.setDescription("Bir kullanıcı belirtmelisin!"));
 
 		const category = async (parentsArray) => {
 			const data = await voiceUserParent.find({ guildID: message.guild.id, userID: member.user.id });
@@ -72,7 +72,7 @@ module.exports = {
 
 		embed.setThumbnail(member.user.avatarURL({ dynamic: true, size: 2048 }));
 		embed.setDescription(`
-    ${member.user.toString()} (${member.roles.highest.toString()}) kişisinin sunucu verileri
+    ${member.user.toString()} (${member.roles.highest}) kişisinin sunucu verileri
     **───────────────**
     **➥ Ses Bilgileri:**
   • Toplam: \`${moment.duration(voiceData ? voiceData.topStat : 0).format("H [saat], m [dakika]")}\`
@@ -100,6 +100,6 @@ module.exports = {
     \`•\` Haftalık Mesaj: \`${Number(messageWeekly).toLocaleString()} mesaj\`
     \`•\` Günlük Mesaj: \`${Number(messageDaily).toLocaleString()} mesaj\`
     `, true);
-		message.channel.send({ embeds: [embed] });
+		message.channel.send(embed);
 	}
 };

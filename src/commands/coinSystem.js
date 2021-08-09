@@ -18,11 +18,11 @@ module.exports = {
     if (["aç", "open"].includes(args[0])) {
       if (global.confdb.get("coinSystem")) return message.channel.error(message, "Coin sistemi zaten açık!");
       global.confdb.set("coinSystem", true);
-      message.channel.send({ embeds: [embed.setDescription("Coin sistemi başarıyla açıldı!")] });
+      message.channel.send(embed.setDescription("Coin sistemi başarıyla açıldı!"));
     } else if (["kapat", "close"].includes(args[0])) {
       if (!global.confdb.get("coinSystem")) return message.channel.error(message, "Coin sistemi zaten kapalı!");
       global.confdb.set("coinSystem", false);
-      message.channel.send({ embeds: [embed.setDescription("Coin sistemi başarıyla kapatıldı!")] });
-    } else message.channel.send({ embeds: [embed.setDescription(`Coin sistemi: \`${global.confdb.get("coinSystem") ? "açık" : "kapalı"}\``)] });
+      message.channel.send(embed.setDescription("Coin sistemi başarıyla kapatıldı!"));
+    } else message.channel.send(embed.setDescription(`Coin sistemi: \`${global.confdb.get("coinSystem") ? "açık" : "kapalı"}\``));
   }
 };

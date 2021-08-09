@@ -1,5 +1,3 @@
-const { Util } = require("discord.js");
-
 module.exports = {
 	conf: {
 		aliases: [],
@@ -22,10 +20,13 @@ module.exports = {
 		try {
 			const result = clean(await eval(code));
 			if (result.includes(client.token))
-				return message.channel.send({ content: "Kancık seni .d" });
-			Util.splitMessage(`\`\`\`js\n${result}\`\`\``).forEach((x) => message.channel.send({ content: x }));
+				return message.channel.send("Kancık seni .d");
+			message.channel.send(result, {
+				code: "js",
+				split: true
+			});
 		} catch (err) {
-			Util.splitMessage(`\`\`\`js\n${err}\`\`\``).forEach((x) => message.channel.send({ content: x }));
+			message.channel.send(err, { code: "js", split: true });
 		}
 	}
 };

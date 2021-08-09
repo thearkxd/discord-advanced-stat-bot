@@ -26,7 +26,7 @@ module.exports = async (message) => {
 		.setFooter("Developed by Theark", theark.avatarURL({ dynamic: true }));
 
 	args = args.splice(1);
-	const cmd = client.commands.get(commandName) || [...client.commands.values()].find((x) => x.conf.aliases && x.conf.aliases.includes(commandName));
+	const cmd = client.commands.get(commandName) || client.commands.array().find((x) => x.conf.aliases && x.conf.aliases.includes(commandName));
 	if (!cmd || (cmd.conf.owner && !settings.owners.includes(message.author.id)) || !cmd.conf.enabled) return;
 
 	if (!settings.owners.includes(message.author.id)) {
@@ -37,7 +37,7 @@ module.exports = async (message) => {
 			if (diff < cooldown) {
 				if (!sent) {
 					sent = true;
-					return message.channel.send({ embeds: [embed.setDescription(`Bu komutu tekrar kullanabilmek için **${Number(((cooldown - diff) / 1000).toFixed(2))}** daha beklemelisin!`)] }).then((x) => x.delete({ timeout: cooldown - diff }));
+					return message.channel.send(embed.setDescription(`Bu komutu tekrar kullanabilmek için **${Number(((cooldown - diff) / 1000).toFixed(2))}** daha beklemelisin!`)).then((x) => x.delete({ timeout: cooldown - diff }));
 				}
 			}
 		} else client.cooldown.set(message.author.id, { cooldown, lastUsage: Date.now() });
@@ -46,5 +46,5 @@ module.exports = async (message) => {
 };
 
 module.exports.conf = {
-	name: "messageCreate"
+	name: "message"
 };

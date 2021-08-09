@@ -20,6 +20,6 @@ module.exports = {
 			.map((x) => `\`${prefix}${x.conf.help}\``)
 			.join("\n");
 
-		message.channel.send({ embeds: [embed.setDescription(list)] });
+		message.channel.send(embed.setDescription(list));
 	}
 };
