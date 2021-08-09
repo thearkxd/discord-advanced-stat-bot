@@ -1,5 +1,7 @@
 # Discord Advanced Stat Bot
 
+## Botun v13 haline ulaşmak için: https://github.com/thearkxd/discord-advanced-stat-bot/tree/v13
+
 # Kurulum
 * İlk olarak bilgisayarına [Node JS](https://nodejs.org/en/) indir.
 * Daha sonra bir [MongoDB](http://mongodb.com) hesabı oluştur ve connection linki al.
