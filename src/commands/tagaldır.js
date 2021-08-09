@@ -21,17 +21,17 @@ module.exports = {
   run: async (client, message, args, embed) => {
     if (!conf.staffs.some(x => message.member.roles.cache.has(x))) return;
     const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-    if (!member) return message.channel.send(embed.setDescription("Bir üye belirtmelisin!"));
-    if (!member.user.username.includes(conf.tag)) return message.channel.send(embed.setDescription("Bu üye taglı değiL!"));
+    if (!member) return message.channel.send({ embeds: [embed.setDescription("Bir üye belirtmelisin!")] });
+    if (!member.user.username.includes(conf.tag)) return message.channel.send({ embeds: [embed.setDescription("Bu üye taglı değil!")] });
     const taggedData = await taggeds.findOne({ guildID: message.guild.id, userID: message.author.id });
-    if (taggedData && taggedData.taggeds.includes(member.user.id)) return message.channel.send(embed.setDescription("Bu üyeye zaten daha önce tag aldırmışsın!"));
+    if (taggedData && taggedData.taggeds.includes(member.user.id)) return message.channel.send({ embeds: [embed.setDescription("Bu üyeye zaten daha önce tag aldırmışsın!")] });
 
     embed.setDescription(`${message.member.toString()} üyesi sana tag aldırmak istiyor. Kabul ediyor musun?`);
-    const msg = await message.channel.send(member.toString(), { embed });
+    const msg = await message.channel.send({ content: member.toString(), embeds: [embed] });
     msg.react("✅");
     msg.react("❌");
 
-    msg.awaitReactions((reaction, user) => ["✅", "❌"].includes(reaction.emoji.name) && user.id === member.user.id, { max: 1, time: 30000, errors: ["time"] }).then(async collected => {
+    msg.awaitReactions({ filter: (reaction, user) => ["✅", "❌"].includes(reaction.emoji.name) && user.id === member.user.id, max: 1, time: 30000, errors: ["time"] }).then(async collected => {
       const reaction = collected.first();
       if (reaction.emoji.name === "✅") {
         await coin.findOneAndUpdate({ guildID: member.guild.id, userID: message.author.id }, { $inc: { coin: conf.taggedCoin } }, { upsert: true });
