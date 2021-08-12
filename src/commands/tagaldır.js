@@ -39,7 +39,7 @@ module.exports = {
         msg.edit(embed.setDescription(`${member.toString()} üyesine başarıyla tag aldırıldı!`));
         await taggeds.findOneAndUpdate({ guildID: message.guild.id, userID: message.author.id }, { $push: { taggeds: member.user.id } }, { upsert: true });
 
-        message.member.updateTask(message.guild.id, "mesaj", 1, message.channel);
+        message.member.updateTask(message.guild.id, "taglı", 1, message.channel);
       } else {
         embed.setColor("RED");
         msg.edit(embed.setDescription(`${member.toString()} üyesi, tag aldırma teklifini reddetti!`));
