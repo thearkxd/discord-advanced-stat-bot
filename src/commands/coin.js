@@ -35,9 +35,9 @@ module.exports = {
 				addedRoles = roles;
 				member.roles.add(roles[roles.length-1].role);
 				embed.setColor("GREEN");
-				message.guild.channels.cache.get(conf.rankLog).send(embed.setDescription(`${member.toString()} üyesine ${message.member.toString()} tarafından **${count}** adet coin eklendi ve kişiye ${roles.filter((x) => roles.indexOf(x) === roles.length-1).map((x) => Array.isArray(x.role) ? rank.role.map((r) => `<@&${r}>`).join(", ") : `<@&${x.role}>`).join("\n")} rolleri verildi!`));
+				message.guild.channels.cache.get(conf.rankLog).send({ embeds: [embed.setDescription(`${member.toString()} üyesine ${message.member.toString()} tarafından **${count}** adet coin eklendi ve kişiye ${roles.filter((x) => roles.indexOf(x) === roles.length-1).map((x) => Array.isArray(x.role) ? x.role.map((r) => `<@&${r}>`).join(", ") : `<@&${x.role}>`).join("\n")} rolleri verildi!`)] });
 			}
-			message.channel.send({ embeds: [embed.setDescription(`Başarıyla ${member.toString()} kullanıcısına **${count}** adet coin eklendi! \n\n${addedRoles.length > 0 ? `Verilen roller: \n${addedRoles.filter((x) => addedRoles.indexOf(x) === addedRoles.length-1).map((x) => Array.isArray(x.role) ? rank.role.map((r) => `<@&${r}>`).join(", ") : `<@&${x.role}>`).join("\n")}` : ""}`)] });
+			message.channel.send({ embeds: [embed.setDescription(`Başarıyla ${member.toString()} kullanıcısına **${count}** adet coin eklendi! \n\n${addedRoles.length > 0 ? `Verilen roller: \n${addedRoles.filter((x) => addedRoles.indexOf(x) === addedRoles.length-1).map((x) => Array.isArray(x.role) ? x.role.map((r) => `<@&${r}>`).join(", ") : `<@&${x.role}>`).join("\n")}` : ""}`)] });
 		} else if (args[0] === "sil" || args[0] === "remove") {
 			if (!message.member.permissions.has(8)) return;
 			if (member.user.id === message.author.id) return message.channel.send({ embeds: [embed.setDescription("Kendinden coin çıkaramazsın!")] });
@@ -57,7 +57,7 @@ module.exports = {
 					member.roles.remove(x.role);
 				});
 				embed.setColor("RED");
-				message.guild.channels.cache.get(conf.rankLog).send(embed.setDescription(`${member.toString()} üyesinden ${message.member.toString()} tarafından **${count}** adet coin çıkarıldı ve kişiden ${roles.map(x => `<@&${x.role}>`).join(", ")} rolleri alındı!`));
+				message.guild.channels.cache.get(conf.rankLog).send({ embeds: [embed.setDescription(`${member.toString()} üyesinden ${message.member.toString()} tarafından **${count}** adet coin çıkarıldı ve kişiden ${Array.isArray(roles) ? roles.map((r) => `<@&${r}>`).join(", ") : `<@&${roles}}>`} rolleri alındı!`)] });
 			}
 			message.channel.send({ embeds: [embed.setDescription(`Başarıyla ${member.toString()} kullanıcısından **${count}** adet coin çıkarıldı! \n\n${removedRoles.length > 0 ? `Alınan roller: \n${removedRoles.map(x => `<@&${x.role}>`).join("\n")}` : ""}`)] });
 		} else if (args[0] === "ver" || args[0] === "give" || args[0] === "gönder") {
