@@ -50,31 +50,13 @@ module.exports = {
       if (!args[3]) return message.channel.error(message, "Bir süre belirtmelisin!");
       if (!count || isNaN(count)) return message.channel.error(message, "Bir miktar belirtmelisin!");
       if (!prizeCount || isNaN(prizeCount)) return message.channel.error(message, "Bir ödül miktarı belirtmelisin!");
-      let taskMessage;
-      switch (type) {
-        case "invite":
-          taskMessage = `**Sunucumuza ${count} kişi davet et!**`;
-          break;
-        case "mesaj":
-          taskMessage = channels.length ? `**${channels.map((x) => `<#${x}>`).join(", ")} ${channels.length > 1 ? "kanallarında" : "kanalında"} ${count} mesaj at!**` : `**Metin kanallarında ${count} mesaj at!**`;
-          break;
-        case "ses":
-          taskMessage = channels.length ? `**${channels.map((x) => `<#${x}>`).join(", ")} ${channels.length > 1 ? "kanallarında" : "kanalında"} ${count/1000/60} dakika vakit geçir!` : `**Seste ${count/1000/60} dakika vakit geçir!**`;
-          break;
-        case "taglı":
-          taskMessage = `**${count} kişiye tag aldır!**`;
-          break;
-        case "kayıt":
-          taskMessage = `**Sunucumuzda ${count} kişi kayıt et!**`;
-          break;
-      }
       if (role) {
         const members = role.members.filter((x) => conf.staffs.some((r) => x.roles.cache.has(r)));
         if (!members.size) return message.channel.error(message, `${role.toString()} rolü olan kimse yetkili değil!`);
-        members.forEach(async (x) => await x.giveTask(message.guild.id, type, count, prizeCount, true, duration, channels.length ? channels.map((x) => x.id) : null, taskMessage));
+        members.forEach(async (x) => await x.giveTask(message.guild.id, type, count, prizeCount, true, duration, channels.length ? channels.map((x) => x.id) : null));
         message.channel.send(embed.setDescription(`${message.mentions.roles.first().toString()} rolüne sahip olan tüm üyelere başarıyla ${type} görevi verildi! \nGörev verilen üyeler: ${members.map((x) => x.toString()).join(", ")}`));
       } else {
-        await member.giveTask(message.guild.id, type, count, prizeCount, true, duration, channels.length ? channels.map((x) => x.id) : null, taskMessage);
+        await member.giveTask(message.guild.id, type, count, prizeCount, true, duration, channels.length ? channels.map((x) => x.id) : null);
         message.channel.send(embed.setDescription(`${member.toString()} üyesine başarıyla ${type} görevi verildi!`));
       }
     } else if (["sil", "delete"].includes(args[0])) {

@@ -22,6 +22,35 @@ module.exports = function (client) {
 	};
 
 	/**
+	 * @param {String} type 
+	 * @param {Array} channels 
+	 */
+	client.getTaskMessage = (type, channels = []) => {
+		let taskMessage;
+		switch (type) {
+			case "invite":
+			  taskMessage = `**Sunucumuza ${count} kişi davet et!**`;
+			  break;
+			case "mesaj":
+			  taskMessage = channels.length ? `**${channels.map((x) => `<#${x}>`).join(", ")} ${channels.length > 1 ? "kanallarında" : "kanalında"} ${count} mesaj at!**` : `**Metin kanallarında ${count} mesaj at!**`;
+			  break;
+			case "ses":
+			  taskMessage = channels.length ? `**${channels.map((x) => `<#${x}>`).join(", ")} ${channels.length > 1 ? "kanallarında" : "kanalında"} ${count/1000/60} dakika vakit geçir!` : `**Seste ${count/1000/60} dakika vakit geçir!**`;
+			  break;
+			case "taglı":
+			  taskMessage = `**${count} kişiye tag aldır!**`;
+			  break;
+			case "kayıt":
+			  taskMessage = `**Sunucumuzda ${count} kişi kayıt et!**`;
+			  break;
+			default:
+				taskMessage = "Bulunamadı!";
+			  break;
+		  }
+		return taskMessage;
+	};
+
+	/**
 	 * @param {String} guildID
 	 * @param {String} type
 	 * @param {Number} count
@@ -29,12 +58,12 @@ module.exports = function (client) {
 	 * @param {Boolean} active
 	 * @param {Number} duration
 	 * @param {Array<String>|null} channels
-	 * @param {String} message
 	 * @returns {Promise<Document<any, any>>}
 	 */
-	GuildMember.prototype.giveTask = async function (guildID, type, count, prizeCount, active = true, duration, channels = null, message) {
+	GuildMember.prototype.giveTask = async function (guildID, type, count, prizeCount, active = true, duration, channels) {
 		const id = await task.find({ guildID });
-		return await new task({ guildID, userID: this.user.id, id: id ? id.length + 1 : 1, type, count, prizeCount, active, finishDate: Date.now() + duration, channels, message }).save();
+		const taskMessage = client.getTaskMessage(type, channels);
+		return await new task({ guildID, userID: this.user.id, id: id ? id.length + 1 : 1, type, count, prizeCount, active, finishDate: Date.now() + duration, channels, message: taskMessage }).save();
 	};
 
 	/**
