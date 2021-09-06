@@ -25,7 +25,7 @@ module.exports = function (client) {
 	 * @param {String} type 
 	 * @param {Array} channels 
 	 */
-	client.getTaskMessage = (type, channels = []) => {
+	client.getTaskMessage = (type, count, channels = []) => {
 		let taskMessage;
 		switch (type) {
 			case "invite":
@@ -62,7 +62,7 @@ module.exports = function (client) {
 	 */
 	GuildMember.prototype.giveTask = async function (guildID, type, count, prizeCount, active = true, duration, channels) {
 		const id = await task.find({ guildID });
-		const taskMessage = client.getTaskMessage(type, channels);
+		const taskMessage = client.getTaskMessage(type, count, channels);
 		return await new task({ guildID, userID: this.user.id, id: id ? id.length + 1 : 1, type, count, prizeCount, active, finishDate: Date.now() + duration, channels, message: taskMessage }).save();
 	};
 
