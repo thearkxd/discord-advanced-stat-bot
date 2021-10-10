@@ -75,7 +75,7 @@ module.exports = {
       
       Görev Tipi: \`${task.type}\`
       Görev Süresi: \`${ms(task.duration).replace("h", " saat").replace("m", " dakika").replace("s", " saniye")}\`
-      Görev Tamamlama Sayısı: \`${task.count}\`
+      Görev Tamamlama Sayısı: \`${task.type === "ses" ? ms(task.count).replace("h", " saat").replace("m", " dakika").replace("s", " saniye") : task.count}\`
       Görev Ödülü: \`${task.prizeCount} coin\`
       `));
     } else if (["şema", "schema"].includes(args[0])) {
@@ -94,7 +94,7 @@ module.exports = {
         Şema ID: \`${client.tasks.length}\`
         Görev Tipi: \`${type}\`
         Görev Süresi: \`${ms(duration).replace("h", " saat").replace("m", " dakika").replace("s", " saniye")}\`
-        Görev Tamamlama Sayısı: \`${type === "ses" ? count/1000/60 + "dakika" : count}\`
+        Görev Tamamlama Sayısı: \`${type === "ses" ? ms(count).replace("h", " saat").replace("m", " dakika").replace("s", " saniye") : count}\`
         Görev Ödülü: \`${prizeCount} coin\`
         `));
       } else if (["sil", "delete"].includes(args[1])) {
