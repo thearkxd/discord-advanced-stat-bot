@@ -19,7 +19,7 @@ module.exports = {
    */
   run: async (client, message, args, embed) => {
     const type = args[2];
-    const duration = 1000 * 60 * (["hourly", "saatlik"].includes(args[3]) ? 60 : ["daily", "günlük"].includes(args[3]) ? 60 * 24 : ["weekly", "haftalık"].includes(args[3]) ? 60 * 24 * 7 : args[3]);
+    const duration = (1000 * 60 * (["hourly", "saatlik"].includes(args[3]) ? 60 : ["daily", "günlük"].includes(args[3]) ? 60 * 24 : ["weekly", "haftalık"].includes(args[3]) ? 60 * 24 * 7 : args[3])) || ms(args[3]);
     let count = args[4];
     const prizeCount = args[5];
     const channels = message.mentions.channels.array();
