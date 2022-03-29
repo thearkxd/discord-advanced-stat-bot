@@ -25,17 +25,17 @@ module.exports = function (client) {
 	 * @param {String} type 
 	 * @param {Array} channels 
 	 */
-	client.getTaskMessage = (type, count, channels = []) => {
+	client.getTaskMessage = (type, count, channels) => {
 		let taskMessage;
 		switch (type) {
 			case "invite":
 			  taskMessage = `**Sunucumuza ${count} kişi davet et!**`;
 			  break;
 			case "mesaj":
-			  taskMessage = channels.length ? `**${channels.map((x) => `<#${x}>`).join(", ")} ${channels.length > 1 ? "kanallarında" : "kanalında"} ${count} mesaj at!**` : `**Metin kanallarında ${count} mesaj at!**`;
+			  taskMessage = channels ? `**${channels.map((x) => `<#${x}>`).join(", ")} ${channels.length > 1 ? "kanallarında" : "kanalında"} ${count} mesaj at!**` : `**Metin kanallarında ${count} mesaj at!**`;
 			  break;
 			case "ses":
-			  taskMessage = channels.length ? `**${channels.map((x) => `<#${x}>`).join(", ")} ${channels.length > 1 ? "kanallarında" : "kanalında"} ${count/1000/60} dakika vakit geçir!` : `**Seste ${count/1000/60} dakika vakit geçir!**`;
+			  taskMessage = channels ? `**${channels.map((x) => `<#${x}>`).join(", ")} ${channels.length > 1 ? "kanallarında" : "kanalında"} ${count/1000/60} dakika vakit geçir!` : `**Seste ${count/1000/60} dakika vakit geçir!**`;
 			  break;
 			case "taglı":
 			  taskMessage = `**${count} kişiye tag aldır!**`;
