@@ -4,7 +4,7 @@ const settings = require("../../configs/settings.json");
 mongoose.connect(settings.mongoUrl, {
 	useUnifiedTopology: true,
 	useNewUrlParser: true
-});
+}).catch(() => { console.log("Mongo Connection Error!"); });
 
 mongoose.connection.on("connected", () => {
 	console.log("Connected to DB");
