@@ -19,4 +19,4 @@ jobs:
         run: npm install
 
       - name: Start the bot
-        run: npm run start
+        run: timeout 10 npm run start || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
