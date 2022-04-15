@@ -36,7 +36,7 @@ module.exports = {
 		if (!conf.coinSystem) return reply({ embeds: [embed.setDescription("Coin sistemi kapalı olduğu için bu komutu kullanamazsınız!")] });
 		const member = interaction ? interaction.member : message.member;
 		if (!member.permissions.has(8)) return;
-		const coin = args[1] || interaction.options.getInteger("coin");
+		const coin = interaction ? interaction.options.getInteger("coin") : args[1];
 		if (["ekle", "add"].includes(args[0]) || interaction.options.getSubcommand() === "ekle") {
 			if (!coin || isNaN(coin)) return reply({ embeds: [embed.setDescription("Eklenecek yetkinin coinini belirtmelisin!")] });
 			if (client.ranks.some((x) => x.coin === coin)) return reply({ embeds: [embed.setDescription(`${coin} coine ulaşıldığında verilecek roller zaten ayarlanmış!`)] });

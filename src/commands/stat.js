@@ -25,7 +25,7 @@ module.exports = {
 	/**
 	 * @returns {Promise<void>}
 	 */
-	run: async ({ client, message, reply, embed, interaction }) => {
+	run: async ({ client, message, reply, embed, interaction, args }) => {
 		const guild = interaction ? interaction.guild : message.guild;
 		const member = interaction ? interaction.options.getMember("kullanıcı") || interaction.member : message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member;
 		const category = async (parentsArray) => {
