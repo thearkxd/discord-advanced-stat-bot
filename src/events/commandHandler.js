@@ -26,7 +26,7 @@ module.exports = async (message) => {
 		.setFooter({ text: `Made by ${theark.username} with ❤️ `, iconURL: theark.displayAvatarURL({ dyanmic: true }) });
 
 	args = args.splice(1);
-	const cmd = client.commands.get(commandName) || client.commands.array().find((x) => x.conf.aliases && x.conf.aliases.includes(commandName));
+	const cmd = client.commands.get(commandName) || [...client.commands.values()].find((x) => x.conf.aliases && x.conf.aliases.includes(commandName));
 	if (!cmd || (cmd.conf.owner && !settings.owners.includes(message.author.id)) || !cmd.conf.enabled) return;
 
 	if (!settings.owners.includes(message.author.id)) {
@@ -54,5 +54,5 @@ module.exports = async (message) => {
 };
 
 module.exports.conf = {
-	name: "message"
+	name: "messageCreate"
 };
