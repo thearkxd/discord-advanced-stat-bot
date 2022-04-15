@@ -3,7 +3,7 @@
 Discord sunucularınızda kullanabileceğiniz gelişmiş ve sade bir istatistik botu.
 
 [![GitHub license](https://img.shields.io/github/license/thearkxd/discord-advanced-stat-bot)](https://github.com/thearkxd/discord-advanced-stat-bot/blob/master/LICENSE.md)
-[![Actions Status](https://github.com/thearkxd/disscord-advanced-stat-bot/actions/workflows/test.yml/badge.svg)](https://github.com/thearkxd/discord-advanced-stat-bot/actions)
+[![Actions Status](https://github.com/thearkxd/discord-advanced-stat-bot/actions/workflows/test.yml/badge.svg)](https://github.com/thearkxd/discord-advanced-stat-bot/actions)
 [![GitHub issues](https://img.shields.io/github/issues/thearkxd/discord-advanced-stat-bot)](https://github.com/thearkxd/discord-advanced-stat-bot/issues)
 
 - [Discord Advanced Stat Bot](#discord-advanced-stat-bot)
