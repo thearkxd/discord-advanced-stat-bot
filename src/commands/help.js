@@ -1,25 +1,27 @@
+const { SlashCommandBuilder } = require("@discordjs/builders");
+
 module.exports = {
 	conf: {
 		aliases: ["help", "y", "h"],
 		name: "yardım",
-		enabled: true
+		enabled: true,
+		slash: true
 	},
 
+	slashOptions: new SlashCommandBuilder()
+		.setName("yardım")
+		.setDescription("Komutlar hakkında bilgi verir."),
+
 	/**
-	 * @param {Client} client
-	 * @param {Message} message
-	 * @param {Array<string>} args
-	 * @param {MessageEmbed} embed
-	 * @param {String} prefix
 	 * @returns {Promise<void>}
 	 */
-	run: async (client, message, args, embed, prefix) => {
+	run: async ({ client, reply, embed, prefix }) => {
 		const list = client.commands
 			.filter((x) => x.conf.help)
 			.sort((a, b) => b.conf.help - a.conf.help)
 			.map((x) => `\`${prefix}${x.conf.help}\``)
 			.join("\n");
 
-		message.channel.send(embed.setDescription(list));
+		reply({ embeds: [embed.setDescription(list)] });
 	}
 };

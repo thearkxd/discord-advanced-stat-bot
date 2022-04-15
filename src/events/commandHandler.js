@@ -22,8 +22,8 @@ module.exports = async (message) => {
 	const theark = await client.users.fetch("350976460313329665");
 	const embed = new MessageEmbed()
 		.setColor(message.member.displayHexColor)
-		.setAuthor(message.member.displayName, message.author.avatarURL({ dynamic: true, size: 2048 }))
-		.setFooter("Developed by Theark", theark.avatarURL({ dynamic: true }));
+		.setAuthor({ name: message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true, size: 2048 }) })
+		.setFooter({ text: `Made by ${theark.username} with ❤️ `, iconURL: theark.displayAvatarURL({ dyanmic: true }) });
 
 	args = args.splice(1);
 	const cmd = client.commands.get(commandName) || client.commands.array().find((x) => x.conf.aliases && x.conf.aliases.includes(commandName));
@@ -37,12 +37,20 @@ module.exports = async (message) => {
 			if (diff < cooldown) {
 				if (!sent) {
 					sent = true;
-					return message.channel.send(embed.setDescription(`Bu komutu tekrar kullanabilmek için **${Number(((cooldown - diff) / 1000).toFixed(2))}** daha beklemelisin!`)).then((x) => x.delete({ timeout: cooldown - diff }));
+					return message.channel
+						.send({
+							embeds: [embed.setDescription(`Bu komutu tekrar kullanabilmek için **${Number(((cooldown - diff) / 1000).toFixed(2))}** daha beklemelisin!`)]
+						})
+						.then((x) => x.delete({ timeout: cooldown - diff }));
 				}
 			}
-		} else client.cooldown.set(message.author.id, { cooldown, lastUsage: Date.now() });
+		} else
+			client.cooldown.set(message.author.id, {
+				cooldown,
+				lastUsage: Date.now()
+			});
 	}
-	cmd.run(client, message, args, embed, prefix);
+	cmd.run({ client, message, args, embed, prefix, reply: (options) => message.reply(options) });
 };
 
 module.exports.conf = {

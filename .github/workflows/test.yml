@@ -1,0 +1,21 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  install_and_build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: Setup Environment for Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Start the bot
+      run: npm run start

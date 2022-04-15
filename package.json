@@ -1,24 +1,66 @@
 {
-  "name": "discord-advanced-stat-bot",
-  "version": "0.0.1",
-  "description": "An advanced Discord stat bot.",
-  "main": "theark.js",
-  "scripts": {
-    "start": "node .",
-    "start:dev": "nodemon ."
-  },
-  "dependencies": {
-    "ark.db": "^2.6.9",
-    "cron": "^1.8.2",
-    "discord.js": "^12.5.1",
-    "moment": "^2.29.1",
-    "moment-duration-format": "^2.3.2",
-    "mongoose": "^5.11.14"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "eslint": "^7.17.0",
-    "nodemon": "^2.0.7",
-    "prettier": "^2.3.0"
-  }
+	"name": "discord-advanced-stat-bot",
+	"description": "An advanced Discord stat bot.",
+	"version": "0.0.1",
+	"main": "./src/theark.js",
+	"keywords": [
+		"discord",
+		"stat",
+		"bot",
+		"coin",
+		"coin-bot",
+		"coin-stat-bot",
+		"discord-coin-bot",
+		"discord-coin-stat-bot",
+		"discord-stat-bot",
+		"discord-advanced-stat-bot"
+	],
+	"maintainers": [
+		{
+			"name": "Theark",
+			"web": "https://github.com/thearkxd"
+		}
+	],
+	"engines": {
+		"node": "16.x"
+	},
+	"scripts": {
+		"start": "node .",
+		"start:dev": "nodemon ."
+	},
+	"nodemonConfig": {
+		"delay": 1000,
+		"watch": [
+			"src"
+		],
+		"ext": "*"
+	},
+	"dependencies": {
+		"@discordjs/builders": "^0.12.0",
+		"@discordjs/rest": "^0.3.0",
+		"ark.db": "^2.6.9",
+		"discord-modals": "^1.3.5",
+		"discord.js": "^13.0.1",
+		"moment": "^2.29.1",
+		"moment-duration-format": "^2.3.2",
+		"mongoose": "^6.2.10",
+		"node-schedule": "^2.1.0"
+	},
+	"devDependencies": {
+		"eslint": "^8.13.0",
+		"nodemon": "^2.0.7",
+		"prettier": "^2.3.0"
+	},
+	"repositories": [
+		{
+			"type": "git",
+			"url": "https://github.com/thearkxd/discord-advanced-stat-bot.git"
+		}
+	],
+	"licenses": [
+		{
+			"name": "MIT",
+			"url": "https://github.com/thearkxd/discord-advanced-stat-bot/blob/master/LICENSE.md"
+		}
+	]
 }

@@ -3,39 +3,37 @@ module.exports = {
 		aliases: [],
 		name: "eval",
 		owner: true,
-		enabled: true
+		enabled: true,
+		slash: false,
+		options: [
+			{
+				name: "komut",
+				description: "Çalıştırılacak komut.",
+				type: 3,
+				required: true
+			}
+		]
 	},
 
 	/**
-	 * @param {Client} client
-	 * @param {Message} message
-	 * @param {Array<string>} args
-	 * @param {MessageEmbed} embed
 	 * @returns {Promise<void>}
 	 */
-	run: async (client, message, args, embed) => {
+	run: async ({ client, message, args, reply }) => {
 		if (!args[0]) return;
 		const code = args.join(" ");
 
 		try {
 			const result = clean(await eval(code));
-			if (result.includes(client.token))
-				return message.channel.send("Kancık seni .d");
-			message.channel.send(result, {
-				code: "js",
-				split: true
-			});
+			if (result.includes(client.token)) return reply({ content: "Kancık seni .d" });
+			Util.splitMessage(`\`\`\`js\n${result}\`\`\``).forEach((x) => reply({ content: x }));
 		} catch (err) {
-			message.channel.send(err, { code: "js", split: true });
+			Util.splitMessage(`\`\`\`js\n${err}\`\`\``).forEach((x) => reply({ content: x }));
 		}
 	}
 };
 
 function clean(text) {
-	if (typeof text !== "string")
-		text = require("util").inspect(text, { depth: 0 });
-	text = text
-		.replace(/`/g, "`" + String.fromCharCode(8203))
-		.replace(/@/g, "@" + String.fromCharCode(8203));
+	if (typeof text !== "string") text = require("util").inspect(text, { depth: 0 });
+	text = text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
 	return text;
 }

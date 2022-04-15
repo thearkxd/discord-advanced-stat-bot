@@ -1,46 +1,61 @@
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const { GuildMember, Role } = require("discord.js");
 const coin = require("../schemas/coin");
 const conf = require("../configs/config.json");
 
 module.exports = {
-  conf: {
-    aliases: ["senkron"],
-    name: "senkronize",
-    help: "senkronize [user] [kullanıcı] / [role] [rol]",
-    enabled: conf.coinSystem
-  },
+	conf: {
+		aliases: ["senkron", "sync"],
+		name: "senkronize",
+		help: "senkronize [kullanıcı/rol]",
+		enabled: conf.coinSystem,
+		slash: true,
+	},
 
-  /**
-   * @param {Client} client
-   * @param {Message} message
-   * @param {Array<string>} args
-   * @param {MessageEmbed} embed
-   * @returns {Promise<void>}
-   */
-  run: async (client, message, args, embed) => {
-    if (!message.member.hasPermission(8)) return;
-    if (args[0] === "kişi" || args[0] === "user") {
-      const member = message.mentions.members.first() || message.guild.members.cache.get(args[1]);
-      if (!member) return message.channel.send(embed.setDescription("Bir kullanıcı belirtmelisin!"));
+	slashOptions: new SlashCommandBuilder()
+		.setName("senkronize")
+		.setDescription("Bir rolü veya kullanıcıyı senkronize eder.")
+		.addMentionableOption((option) => option.setName("hedef").setDescription("Senkronize etmek istediğiniz kişi ya da rol.").setRequired(true)),
 
-      if (client.ranks.some(x => member.hasRole(x.role))) {
-        let rank = client.ranks.filter(x => member.hasRole(x.role));
-        rank = rank[rank.length-1];
-        await coin.findOneAndUpdate({ guildID: message.guild.id, userID: member.user.id }, { $set: { coin: rank.coin } }, { upsert: true });
-        message.channel.send(embed.setDescription(`${member.toString()} üyesinde ${Array.isArray(rank.role) ? rank.role.map(x => `<@&${x}>`).join(", ") : `<@&${rank.role}>`} rolü bulundu ve coini ${rank.coin} olarak değiştirildi!`));
-      } else return message.channel.send(embed.setDescription(`${member.toString()} üyesinde sistemde ayarlı bir rol bulunamadı!`));
-    } else if (args[0] === "role" || args[0] === "rol") {
-      const role = message.mentions.roles.first() || message.guild.roles.cache.get(args[1]);
-      if (!role) return message.channel.send(embed.setDescription("Bir rol belirtmelisin!"));
-      if (role.members.length === 0) return message.channel.send(embed.setDescription("Bu rolde üye bulunmuyor!"));
-      role.members.forEach(async member => {
-        if (member.user.bot) return;
-        if (client.ranks.some(x => member.hasRole(x.role))) {
-          let rank = client.ranks.filter(x => member.hasRole(x.role));
-          rank = rank[rank.length-1];
-          await coin.findOneAndUpdate({ guildID: message.guild.id, userID: member.user.id }, { $set: { coin: rank.coin } }, { upsert: true });
-          message.channel.send(embed.setDescription(`${member.toString()} üyesinde ${Array.isArray(rank.role) ? rank.role.map(x => `<@&${x}>`).join(", ") : `<@&${rank.role}>`} rolü bulundu ve coini ${rank.coin} olarak değiştirildi!`));
-        } else return message.channel.send(embed.setDescription(`${member.toString()} üyesinde sistemde ayarlı bir rol bulunamadı!`));
-      });
-    } else return message.channel.send(embed.setDescription("Bir argüman belirtmelisin!"));
-  }
+	/**
+	 * @returns {Promise<void>}
+	 */
+	run: async ({ client, message, args, embed, reply, interaction }) => {
+		if (!conf.coinSystem) return reply({ embeds: [embed.setDescription("Coin sistemi kapalı olduğu için bu komutu kullanamazsınız!")] });
+		if ((interaction && !interaction.member.hasPermission(8)) || (message && !message.hasPermission(8))) return;
+		const target = interaction?.options.getMentionable("hedef");
+		const member = interaction ? target : message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+		const role = interaction ? target : message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);
+		if (member || target instanceof GuildMember) {
+			if (client.ranks.some((x) => member.hasRole(x.role))) {
+				let rank = client.ranks.filter((x) => member.hasRole(x.role));
+				rank = rank[rank.length - 1];
+				await coin.updateOne({ guildID: member.guild.id, userID: member.user.id }, { $set: { coin: rank.coin } }, { upsert: true });
+				reply({
+					embeds: [
+						embed.setDescription(
+							`${member.toString()} üyesinde ${Array.isArray(rank.role) ? rank.role.map((x) => `<@&${x}>`).join(", ") : `<@&${rank.role}>`} rolü bulundu ve coini ${rank.coin} olarak değiştirildi!`
+						)
+					]
+				});
+			} else return reply({ embeds: [embed.setDescription(`${member.toString()} üyesinde sistemde ayarlı bir rol bulunamadı!`)] });
+		} else if (role || target instanceof Role) {
+			if (role.members.length === 0) return reply({ embeds: [embed.setDescription("Bu rolde üye bulunmuyor!")] });
+			role.members.forEach(async (member) => {
+				if (member.user.bot) return;
+				if (client.ranks.some((x) => member.hasRole(x.role))) {
+					let rank = client.ranks.filter((x) => member.hasRole(x.role));
+					rank = rank[rank.length - 1];
+					await coin.updateOne({ guildID: role.guild.id, userID: member.user.id }, { $set: { coin: rank.coin } }, { upsert: true });
+					reply({
+						embeds: [
+							embed.setDescription(
+								`${member.toString()} üyesinde ${Array.isArray(rank.role) ? rank.role.map((x) => `<@&${x}>`).join(", ") : `<@&${rank.role}>`} rolü bulundu ve coini ${rank.coin} olarak değiştirildi!`
+							)
+						]
+					});
+				} else return reply({ embeds: [embed.setDescription(`${member.toString()} üyesinde sistemde ayarlı bir rol bulunamadı!`)] });
+			});
+		} else return reply({ embeds: [embed.setDescription("Geçerli bir argüman belirtmelisin!")] });
+	}
 };
