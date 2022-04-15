@@ -22,7 +22,7 @@ module.exports = {
 	 */
 	run: async ({ client, message, args, embed, reply, interaction }) => {
 		if (!conf.coinSystem) return reply({ embeds: [embed.setDescription("Coin sistemi kapalı olduğu için bu komutu kullanamazsınız!")] });
-		if ((interaction && !interaction.member.hasPermission(8)) || (message && !message.hasPermission(8))) return;
+		if ((interaction && !interaction.member.permissions.has(8)) || (message && !message.permissions.has(8))) return;
 		const target = interaction?.options.getMentionable("hedef");
 		const member = interaction ? target : message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 		const role = interaction ? target : message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);

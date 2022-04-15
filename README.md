@@ -134,7 +134,7 @@ Davet görevlerinin çalışabilmesi için, [buradan](https://github.com/thearkx
 
 Slash komutların görünmesi için botu sunucunuza eklerken application commands izni vermeniz gerekiyor.
 
-- Öncelikle Developer Portal'dan bot sayfamıza giriyoruz.
+- Öncelikle [Developer Portal](https://discord.com/developers/applications)'dan bot sayfamıza giriyoruz.
 - Daha sonra soldaki menüden `OAuth2` sekmesinin altından `URL Generator`'a tıklıyoruz.
 - Sağ taraftan `application.commands` tikine tıklıyoruz ve aşağıdaki linki kopyalıyoruz.
 - Linke girip botumuza izni verdikten sonra slash komutlarınız görünecektir.

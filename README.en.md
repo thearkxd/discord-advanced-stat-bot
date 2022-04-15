@@ -126,7 +126,7 @@ In order for the invite tasks to work, you need to download and install my regis
 
 For Slash commands to appear, you need to grant application commands permission when adding the bot to your server.
 
-- First of all, we enter our bot page from the Developer Portal.
+- First of all, we enter our bot page from the [Developer Portal](https://discord.com/developers/applications).
 - Then, under the 'OAuth2' tab, we click on 'URL Generator' from the left menu.
 - Click on `application.commands` from the right side and copy the link below.
 - After you enter the link and give permission to our bot, your slash commands will appear.
