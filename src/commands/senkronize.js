@@ -23,10 +23,9 @@ module.exports = {
 	run: async ({ client, message, args, embed, reply, interaction }) => {
 		if (!conf.coinSystem) return reply({ embeds: [embed.setDescription("Coin sistemi kapalı olduğu için bu komutu kullanamazsınız!")] });
 		if ((interaction && !interaction.member.permissions.has(8)) || (message && !message.permissions.has(8))) return;
-		const target = interaction?.options.getMentionable("hedef");
-		const member = interaction ? target : message.mentions.members.first() || message.guild.members.cache.get(args[0]);
-		const role = interaction ? target : message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);
-		if (member || target instanceof GuildMember) {
+		const member = interaction ? interaction.guild.members.cache.get(interaction.options.getMentionable("hedef").id) : message.mentions.members.first() || message.guild.members.cache.get(args[0]);
+		const role = interaction ? interaction.guild.roles.cache.get(interaction.options.getMentionable("hedef").id) : message.mentions.roles.first() || message.guild.roles.cache.get(args[0]);
+		if (member) {
 			if (client.ranks.some((x) => member.hasRole(x.role))) {
 				let rank = client.ranks.filter((x) => member.hasRole(x.role));
 				rank = rank[rank.length - 1];
@@ -39,7 +38,7 @@ module.exports = {
 					]
 				});
 			} else return reply({ embeds: [embed.setDescription(`${member.toString()} üyesinde sistemde ayarlı bir rol bulunamadı!`)] });
-		} else if (role || target instanceof Role) {
+		} else if (role) {
 			if (role.members.length === 0) return reply({ embeds: [embed.setDescription("Bu rolde üye bulunmuyor!")] });
 			role.members.forEach(async (member) => {
 				if (member.user.bot) return;
