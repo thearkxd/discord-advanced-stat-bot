@@ -1,4 +1,4 @@
-name: Test
+name: test
 
 on: [push, pull_request]
 
@@ -18,4 +18,4 @@ jobs:
         run: npm install
 
       - name: Start the bot
-      run: npm run start
+        run: npm run start
