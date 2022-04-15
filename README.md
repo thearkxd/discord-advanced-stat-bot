@@ -128,7 +128,18 @@ Senkronize komutu ise şu işe yarar; Diyelim siz `ranks` kısmına `x, y ve z` 
 
 ## Ben bu botta görev sistemi var diye indirmiştim, davet ve kayıt görevleri çalışmıyor?? 🤬🤬
 
-Davet görevlerinin çalışabilmesi için, [buradan](https://github.com/thearkxd/discord-supervisor-bot) benim kayıt botumu indirip kurmanız, bu botun bulunduğu sunucuya eklemeniz gerekmektedir. Kayıt görevlerinin çalışabilmesi için ise sunucuya gelen kişilerin kaydını o bot üzerinden yapmanız gerekmektedir. :blush: 
+Davet görevlerinin çalışabilmesi için, [buradan](https://github.com/thearkxd/discord-supervisor-bot) benim kayıt botumu indirip kurmanız, bu botun bulunduğu sunucuya eklemeniz gerekmektedir. Kayıt görevlerinin çalışabilmesi için ise sunucuya gelen kişilerin kaydını o bot üzerinden yapmanız gerekmektedir. :blush:
+
+## Botu sunucuma ekledim, kurdum fakat slash komutları görünmüyor?
+
+Slash komutların görünmesi için botu sunucunuza eklerken application commands izni vermeniz gerekiyor.
+
+- Öncelikle Developer Portal'dan bot sayfamıza giriyoruz.
+- Daha sonra soldaki menüden `OAuth2` sekmesinin altından `URL Generator`'a tıklıyoruz.
+- Sağ taraftan `application.commands` tikine tıklıyoruz ve aşağıdaki linki kopyalıyoruz.
+- Linke girip botumuza izni verdikten sonra slash komutlarınız görünecektir.
+
+<img src="https://cdn.discordapp.com/attachments/770738442744627261/964659371638423552/unknown.png">
 
 ### Başka bir hata almanız ya da botta bir sorun bulmanız dahilinde aşağıda linkini verdiğim Discord sunucuma gelip bana yazabilirsiniz. :blush: 
 

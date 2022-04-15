@@ -122,6 +122,17 @@ The synchronize command works as follows; Let's say you entered the 'x, y and z'
 
 In order for the invite tasks to work, you need to download and install my registration bot [here](https://github.com/thearkxd/discord-supervisor-bot) and add it to the server where this bot is located. In order for the registration tasks to work, you need to register the people coming to the server through that bot. :blush:
 
+## I added the bot to my server, I installed it, but the slash commands do not appear?
+
+For Slash commands to appear, you need to grant application commands permission when adding the bot to your server.
+
+- First of all, we enter our bot page from the Developer Portal.
+- Then, under the 'OAuth2' tab, we click on 'URL Generator' from the left menu.
+- Click on `application.commands` from the right side and copy the link below.
+- After you enter the link and give permission to our bot, your slash commands will appear.
+
+<img src="https://cdn.discordapp.com/attachments/770738442744627261/964659371638423552/unknown.png">
+
 ### If you get another error or find a problem with the bot, you can come to my Discord server, which I have given the link below, and write to me. :blush:
 
 ## Images:
