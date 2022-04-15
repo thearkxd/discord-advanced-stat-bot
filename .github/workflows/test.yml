@@ -2,13 +2,31 @@ name: test
 
 on: [push, pull_request]
 
+env:
+  APP_MONGO_USER: test
+  APP_MONGO_PASS: password
+  APP_MONGO_DB: test
+
 jobs:
   install_and_build:
     runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: test
+          MONGO_INITDB_ROOT_PASSWORD: password
+          MONGO_INITDB_DATABASE: test
+        options: >-
+          --health-cmd mongo
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
     strategy:
       matrix:
         node-version: [16.x]
-        mongodb-version: ['4.2', '4.4', '5.0']
     steps:
       - uses: actions/checkout@v3
       - name: Setup Environment for Node ${{ matrix.node-version }}
@@ -18,11 +36,6 @@ jobs:
       
       - name: Install Dependencies
         run: npm install
-
-      - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.7.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
 
       - name: Start the bot
         run: npm run start
