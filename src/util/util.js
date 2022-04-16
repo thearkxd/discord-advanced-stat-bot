@@ -63,6 +63,7 @@ module.exports = function (client) {
 	 */
 	GuildMember.prototype.giveTask = async function (guildID, type, count, prizeCount, active = true, duration, channels) {
 		const id = await task.find({ guildID });
+		const taskMessage = client.getTaskMessage(type, count, channels);
 		return await new task({
 			guildID,
 			userID: this.user.id,
@@ -73,7 +74,7 @@ module.exports = function (client) {
 			active,
 			finishDate: Date.now() + duration,
 			channels,
-			message
+			message: taskMessage
 		}).save();
 	};
 
