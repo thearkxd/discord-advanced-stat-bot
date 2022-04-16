@@ -47,7 +47,7 @@ module.exports = {
 										x.type === "ses"
 											? `${moment.duration(x.completedCount).format("H [saat], m [dk], s [sn]")} / ${moment.duration(x.count).format("H [saat], m [dk], s [sn]")}`
 											: `${x.completedCount} / ${x.count}`
-								  }\` \nKalan Süre: \`${moment.duration(x.finishDate - Date.now()).format("H [saat], m [dakika] s [saniye]")}\` \nÖdül: ${conf.emojis.coin} \`${x.prizeCount} coin\``
+								  }\` \nKalan Süre: \`${x.finishDate - Date.now() > 0 ? moment.duration(x.finishDate - Date.now()).format("H [saat], m [dakika] s [saniye]") : "0 saniye"}\` \nÖdül: ${conf.emojis.coin} \`${x.prizeCount} coin\``
 						}`
 				)
 				.join("\n\n")}
