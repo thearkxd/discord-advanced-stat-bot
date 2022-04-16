@@ -1,3 +1,5 @@
+const { Util } = require("discord.js");
+
 module.exports = {
 	conf: {
 		aliases: [],

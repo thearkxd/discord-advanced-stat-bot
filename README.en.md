@@ -128,7 +128,7 @@ For Slash commands to appear, you need to grant application commands permission 
 
 - First of all, we enter our bot page from the [Developer Portal](https://discord.com/developers/applications).
 - Then, under the 'OAuth2' tab, we click on 'URL Generator' from the left menu.
-- Click on `application.commands` from the right side and copy the link below.
+- Click on `applications.commands` from the right side and copy the link below.
 - After you enter the link and give permission to our bot, your slash commands will appear.
 
 <img src="https://cdn.discordapp.com/attachments/770738442744627261/964659371638423552/unknown.png">
@@ -137,8 +137,15 @@ For Slash commands to appear, you need to grant application commands permission 
 
 ## Images:
 
-<img src="https://cdn.discordapp.com/attachments/770738442744627261/850039763268141096/unknown.png">
-<img src="https://cdn.discordapp.com/attachments/770738442744627261/850040014216757278/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965017292977078372/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965019089380708412/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965021715526713384/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965022085229477928/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965022213839405086/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965022328712994876/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965022484946649178/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965022770880708638/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965023300826824795/unknown.png">
 
 ## Contact
 

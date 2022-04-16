@@ -41,7 +41,7 @@ module.exports = {
 				addedRoles = roles;
 				member.roles.add(roles[roles.length - 1].role);
 				embed.setColor("GREEN");
-				member.guild.channels.cache.get(conf.rankLog).send({
+				member.guild.channels.cache.get(conf.rankLog)?.send({
 					embeds: [
 						embed.setDescription(
 							`${member.toString()} üyesine ${msgMember.toString()} tarafından **${count}** adet coin eklendi ve kişiye ${roles

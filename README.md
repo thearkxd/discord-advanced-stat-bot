@@ -136,7 +136,7 @@ Slash komutların görünmesi için botu sunucunuza eklerken application command
 
 - Öncelikle [Developer Portal](https://discord.com/developers/applications)'dan bot sayfamıza giriyoruz.
 - Daha sonra soldaki menüden `OAuth2` sekmesinin altından `URL Generator`'a tıklıyoruz.
-- Sağ taraftan `application.commands` tikine tıklıyoruz ve aşağıdaki linki kopyalıyoruz.
+- Sağ taraftan `applications.commands` tikine tıklıyoruz ve aşağıdaki linki kopyalıyoruz.
 - Linke girip botumuza izni verdikten sonra slash komutlarınız görünecektir.
 
 <img src="https://cdn.discordapp.com/attachments/770738442744627261/964659371638423552/unknown.png">
@@ -145,9 +145,15 @@ Slash komutların görünmesi için botu sunucunuza eklerken application command
 
 # Görseller:
 
-<img  src="https://cdn.discordapp.com/attachments/770738442744627261/850039763268141096/unknown.png">
-
-<img  src="https://cdn.discordapp.com/attachments/770738442744627261/850040014216757278/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965017292977078372/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965019089380708412/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965021715526713384/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965022085229477928/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965022213839405086/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965022328712994876/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965022484946649178/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965022770880708638/unknown.png">
+<img  src="https://cdn.discordapp.com/attachments/770738442744627261/965023300826824795/unknown.png">
 
   
 

@@ -22,7 +22,8 @@ module.exports = function (client) {
 	 * @param {String} type
 	 * @param {Array} channels
 	 */
-	client.getTaskMessage = (type, count, channels = []) => {
+	client.getTaskMessage = (type, count, channels) => {
+		channels = channels || [];
 		let taskMessage;
 		switch (type) {
 			case "invite":
@@ -35,7 +36,7 @@ module.exports = function (client) {
 				break;
 			case "ses":
 				taskMessage = channels.length
-					? `**${channels.map((x) => `<#${x}>`).join(", ")} ${channels.length > 1 ? "kanallarında" : "kanalında"} ${count / 1000 / 60} dakika vakit geçir!`
+					? `**${channels.map((x) => `<#${x}>`).join(", ")} ${channels.length > 1 ? "kanallarında" : "kanalında"} ${count / 1000 / 60} dakika vakit geçir!**`
 					: `**Seste ${count / 1000 / 60} dakika vakit geçir!**`;
 				break;
 			case "taglı":
@@ -61,7 +62,7 @@ module.exports = function (client) {
 	 * @param {Array<String>|null} channels
 	 * @returns {Promise<Document<any, any>>}
 	 */
-	GuildMember.prototype.giveTask = async function (guildID, type, count, prizeCount, active = true, duration, channels) {
+	GuildMember.prototype.giveTask = async function (guildID, type, count, prizeCount, active = true, duration, channels = []) {
 		const id = await task.find({ guildID });
 		const taskMessage = client.getTaskMessage(type, count, channels);
 		return await new task({
