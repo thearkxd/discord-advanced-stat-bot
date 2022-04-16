@@ -24,7 +24,7 @@ module.exports = {
 	run: async ({ client, message, args, embed, reply, interaction }) => {
 		if (!conf.coinSystem) return reply({ embeds: [embed.setDescription("Coin sistemi kapalı olduğu için bu komutu kullanamazsınız!")] });
 		const member = interaction
-			? interaction.guild.members.cache.get(interaction.options.getUser("kullanıcı").id) || interaction.member
+			? interaction.options.getUser("kullanıcı") ? interaction.guild.members.cache.get(interaction.options.getUser("kullanıcı").id) : interaction.member
 			: message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member;
 		const tasks = await task.find({ guildID: member.guild.id, userID: member.user.id });
 		embed.setThumbnail("https://img.itch.zone/aW1nLzIzNzE5MzEuZ2lm/original/GcEpW9.gif");
