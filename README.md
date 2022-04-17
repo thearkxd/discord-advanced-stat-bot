@@ -65,7 +65,7 @@ Botun içinde bulunan özellikler bunlardır. Eğer yanında tik işareti varsa 
 
 	-  `​aloneParents:`​ Sunucunun alone ses kategorisi.
 
-	-  `ignoreChannels:` Coin verilmemesini istemediğiniz kanallar.
+	-  `ignoreChannels:` Coin verilmesini istemediğiniz kanallar.
 
 	-  `coinSystem:`  **true** değeri coin sistemini açar, **false** değeri ise kapatır.
 
