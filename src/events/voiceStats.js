@@ -21,7 +21,7 @@ module.exports = async (oldState, newState) => {
 	if (!oldState.channelId && newState.channelId) await joinedAt.updateOne({ userID: newState.id }, { $set: { date: Date.now() } }, { upsert: true });
 	const joinedAtData = (await joinedAt.findOne({ userID: oldState.id }))
 		? await joinedAt.findOne({ userID: oldState.id })
-		: await joinedAt.findOneAndUpdate({ userID: oldState.id }, { $set: { date: Date.now() } }, { upsert: true });
+		: await joinedAt.findOneAndUpdate({ userID: oldState.id }, { $set: { date: Date.now() } }, { upsert: true, new: true });
 	const data = Date.now() - joinedAtData.date;
 
 	if (oldState.channelId && !newState.channelId) {
