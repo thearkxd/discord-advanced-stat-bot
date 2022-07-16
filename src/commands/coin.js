@@ -88,7 +88,7 @@ module.exports = {
 					embeds: [
 						embed.setDescription(
 							`${member.toString()} üyesinden ${msgMember.toString()} tarafından **${count}** adet coin çıkarıldı ve kişiden ${
-								Array.isArray(roles) ? roles.listRoles() : `<@&${roles}}>`
+								Array.isArray(roles) ? roles.role.listRoles() : `<@&${roles.role}}>`
 							} rolleri alındı!`
 						)
 					]
@@ -98,7 +98,7 @@ module.exports = {
 				embeds: [
 					embed.setDescription(
 						`Başarıyla ${member.toString()} kullanıcısından **${count}** adet coin çıkarıldı! \n\n${
-							removedRoles.length > 0 ? `Alınan roller: \n${removedRoles.listRoles()}` : ""
+							removedRoles.length > 0 ? `Alınan roller: \n${removedRoles.role.listRoles()}` : ""
 						}`
 					)
 				]
