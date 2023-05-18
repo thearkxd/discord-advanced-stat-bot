@@ -26,19 +26,19 @@ module.exports = async () => {
 
 	scheduleJob("0 0 * * *", () => {
 		client.guilds.cache.forEach(async (guild) => {
-			await messageGuild.updateOne({ guildID: guild.id }, { $set: { dailyStat: 0 } });
-			await voiceGuild.updateOne({ guildID: guild.id }, { $set: { dailyStat: 0 } });
-			await messageUser.updateOne({ guildID: guild.id }, { $set: { dailyStat: 0 } });
-			await voiceUser.updateOne({ guildID: guild.id }, { $set: { dailyStat: 0 } });
+			await messageGuild.updateMany({ guildID: guild.id }, { $set: { dailyStat: 0 } });
+			await voiceGuild.updateMany({ guildID: guild.id }, { $set: { dailyStat: 0 } });
+			await messageUser.updateMany({ guildID: guild.id }, { $set: { dailyStat: 0 } });
+			await voiceUser.updateMany({ guildID: guild.id }, { $set: { dailyStat: 0 } });
 		});
 	});
 
 	scheduleJob("0 0 * * 0", () => {
 		client.guilds.cache.forEach(async (guild) => {
-			await messageGuild.updateOne({ guildID: guild.id }, { $set: { weeklyStat: 0 } });
-			await voiceGuild.updateOne({ guildID: guild.id }, { $set: { weeklyStat: 0 } });
-			await messageUser.updateOne({ guildID: guild.id }, { $set: { weeklyStat: 0 } });
-			await voiceUser.updateOne({ guildID: guild.id }, { $set: { weeklyStat: 0 } });
+			await messageGuild.updateMany({ guildID: guild.id }, { $set: { weeklyStat: 0 } });
+			await voiceGuild.updateMany({ guildID: guild.id }, { $set: { weeklyStat: 0 } });
+			await messageUser.updateMany({ guildID: guild.id }, { $set: { weeklyStat: 0 } });
+			await voiceUser.updateMany({ guildID: guild.id }, { $set: { weeklyStat: 0 } });
 		});
 	});
 };
